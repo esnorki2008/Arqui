@@ -9,6 +9,7 @@ byte leds2[8][8];
 byte Abajo[8][8];
 int Veces=0;
 int Desp=9;
+int ModoPantalla=0;// 0 Nombre    1 Juego
 int pins[17]= {-1, 2, 3, 4, 5, 6, 7, 8, 9, 22, 24, 26,28,30, 32, 34,36};
 
 int rows[8] = {pins[1], pins[2], pins[5], pins[4], pins[3], pins[6], pins[7], pins[8]};
@@ -24,7 +25,8 @@ byte Mensaje[TamanioMensaje][8][8] = {
 };
 int pattern = 0;
 void setup() {
- PosX=PosY=Letra=0;
+  //ModoPantalla=0;
+  PosX=PosY=Letra=0;
 
   // Configuramos los pinso como salida
   for (int i = 1; i <= 16; i++) {
@@ -49,9 +51,14 @@ void setup() {
 }
  
 void loop() {
+  if(ModoPantalla==0){
     pattern = ++pattern % TamanioMensaje;
     DeslizarMatriz1(pattern, 100);
     GraficarMatriz2();
+  }if(ModoPantalla==1){
+    
+  }
+    
 }
 
 
