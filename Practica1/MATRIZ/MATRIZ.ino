@@ -1,6 +1,6 @@
 #include "FrequencyTimer2.h"
 #include "Simbolos.cpp"
-#include <LedControl.h>
+#include "LedControl.h"
 
 LedControl lc=LedControl(10,11,12,1); 
 byte col = 0;
@@ -20,7 +20,7 @@ int PosX,PosY,Letra;
 
 
 byte Mensaje[TamanioMensaje][8][8] = {
- SPACE,G,UNO,TRES,SPACE,GUION,SPACE,S,E,C,C,I,O,N,SPACE,A,SPACE,GUION,SPACE,P,R,A,C,T,I,C,A,UNO
+ ESPACIO,G,UNO,TRES,ESPACIO,GUION,ESPACIO,S,E,C,C,I,O,N,ESPACIO,A,ESPACIO,GUION,ESPACIO,P,R,A,C,T,I,C,A,UNO
 };
 int pattern = 0;
 void setup() {
