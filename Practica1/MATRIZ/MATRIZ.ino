@@ -11,6 +11,11 @@ int Veces=0;
 int Desp=9;
 int pins[17]= {-1, 2, 3, 4, 5, 6, 7, 8, 9, 22, 24, 26,28,30, 32, 34,36};
 
+//Control de velocidad
+int velocidad = 0;
+//Control de movimiento
+int movimiento = 0;
+
 int rows[8] = {pins[1], pins[2], pins[5], pins[4], pins[3], pins[6], pins[7], pins[8]};
 
 int cols[8] = {pins[16], pins[15], pins[14], pins[13], pins[12], pins[11], pins[10], pins[9]}; 
@@ -49,8 +54,15 @@ void setup() {
 }
  
 void loop() {
+    //Lee el dato del potenciometro
+    velocidad = analogRead(0);
+    //Mapea el dato del potenciometro
+    velocidad = map(velocidad, 0, 1024, 0, 255);
+    
     pattern = ++pattern % TamanioMensaje;
-    DeslizarMatriz1(pattern, 100);
+
+    //Envia el dato del potenciometro como velocidad hacia la funcion DeslizarMatriz1
+    DeslizarMatriz1(pattern, velocidad, movimiento);
     GraficarMatriz2();
 }
 
@@ -139,9 +151,9 @@ void MoverArriba(int pattern, int del) {
     delay(del);
     //CopiarAbajo();
 }
-void DeslizarMatriz1(int Patron, int Delay) {
+void DeslizarMatriz1(int Patron, int Delay, int Movimiento) {
   
-  if(Veces<80){
+  /*if(Veces<80){
   Veces++;
   MoverAbajo(Patron,Delay);
   }else if(Veces>81) {
@@ -152,6 +164,13 @@ void DeslizarMatriz1(int Patron, int Delay) {
     MoverArriba(Patron,Delay);
       Veces=160;
       Veces--;
+    }*/
+    if(Movimiento == 0){
+      //Se mueve hacia arriba
+      MoverArriba(Patron, Delay);
+    } else {
+      //Se mueve hacia abajo
+      MoverAbajo(Patron, Delay);
     }
 }
 
