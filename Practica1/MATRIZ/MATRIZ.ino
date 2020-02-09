@@ -14,11 +14,14 @@ int Veces=0;
 int Desp=9;
 //Informacion Para El Juego
 int PosObsta=0;
-int FrecuenciaJuego=10;
+//
+int FrecuenciaJuego=50;
+//
 byte Tablero[17][8];
 int PosJugador=4;
 int Milis=0;
 //
+int Pasos=0;
 byte EstadoJuego=0; //0 NoIniciado  1 Empezado   2 Pausado   3 Finalizado
 int ModoPantalla=1;// 0 Nombre    1 CuentaRegresiva   2 Juego    3 Pausa
 //Pin Digitales Del Arduino    
@@ -147,6 +150,7 @@ void LimpiarMatrices(){
   }  
   
 }
+
 void ContinuarJuego(){//Mover Obstaculos
   //MantenerBarreras();
   MostrarJuego();
@@ -154,16 +158,34 @@ void ContinuarJuego(){//Mover Obstaculos
  
  
   int Seg=Segundos(Milis);
-  int Dificultad=15-Seg/1;
-  if(Dificultad<=0)
-    Dificultad=0;
 
-  Milis=Milis+8;
-  //100 Menor Dificultad
+  
+  int Dificultad=10;
+  switch(Seg%10){
+    case 0:
+      Dificultad=20;
+    break;
+    case 1:
+      Dificultad=15;
+    break; 
+    case 2:
+      Dificultad=10;
+    break; 
+    case 3:
+      Dificultad=5;
+    break; 
+    default:
+      Dificultad=2;
+    break;   
+    
+  }
+  
+
+  Milis=Milis+FrecuenciaJuego*Dificultad;
+  
 
 
-
-if(Milis%(100+20*Dificultad)==0 ||true ){//Mover Obstaculos
+if(Pasos==1 ||Pasos==3){//Mover Obstaculos
   for(int j=15;j>0;j--){
     
     for(int i=1;i<7;i++){
@@ -180,7 +202,7 @@ if(Milis%(100+20*Dificultad)==0 ||true ){//Mover Obstaculos
 
 
   
-if(Milis%(200+8*Dificultad)==0){//Poner Obstaculo  
+if(Pasos==1 ||Pasos==3){//Poner Obstaculo  
 //if(Seg==0){
   CrearObstaculo();
 }   
@@ -192,7 +214,7 @@ else
 
     
 
-delay(8);
+delay(FrecuenciaJuego*Dificultad);
   if(Colisiono()){
     //EstadoJuego=2;//Terminar Juego  
   }  
