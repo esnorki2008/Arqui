@@ -1,22 +1,12 @@
-int Entrada=37;
-int ledPin = 13;
-int Valor=0;
-void setup()
-{
-  // put your setup code here, to run once:
-  pinMode(Entrada,INPUT);
-  Serial.begin(9600); 
-  pinMode(ledPin, OUTPUT);
-   digitalWrite(Entrada, HIGH);
+int analogPin = A0; // potentiometer wiper (middle terminal) connected to analog pin 3
+                    // outside leads to ground and +5V
+int val = 0;  // variable to store the value read
+
+void setup() {
+  Serial.begin(9600);           //  setup serial
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  Valor=digitalRead(Entrada);
-  Serial.println(Valor);
-  if(Valor==1)
-    digitalWrite(ledPin, HIGH);
-  else
-     digitalWrite(ledPin, LOW);
-  delay(100);
+  val = analogRead(analogPin) * (5.0 / 1023.0);  // read the input pin
+  Serial.println(val * (5.0 / 1023.0));          // debug value
 }

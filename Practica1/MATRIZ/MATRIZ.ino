@@ -9,6 +9,7 @@ byte Leds2[8][8];
 byte Abajo[8][8];
 
 //Botones
+int analogPin = A0;
 int BtnPausa=37;
 int BtnArriba=39;
 int BtnAbajo=41;
@@ -178,10 +179,10 @@ void CuentaRegresiva(){
 void GrupoEnPantalla(){
   
     //Lee el dato del potenciometro
-    velocidad = analogRead(0);
+    //velocidad = analogRead(0);
     //Mapea el dato del potenciometro
-    velocidad = map(velocidad, 0, 1024, 0, 255);
-    
+    //velocidad = map(velocidad, 0, 1024, 0, 255);
+    velocidad= analogRead(analogPin) * (5.0 / 1023.0)*100;
 
     int Inputs=digitalRead(BtnArriba);
     if(Inputs==0)
