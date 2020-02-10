@@ -168,9 +168,11 @@ void CuentaRegresiva(){
        
        
        if(!EstuvoPausado){
+          
           NuevoJuego();
           Segundos=0;
           MiliSegundos=0;
+          PosJugador=4;
        }
        else
        EstuvoPausado=false;
@@ -183,7 +185,10 @@ void GrupoEnPantalla(){
     //Mapea el dato del potenciometro
     //velocidad = map(velocidad, 0, 1024, 0, 255);
     velocidad= analogRead(analogPin) * (5.0 / 1023.0)*100;
-
+    Segundos=0;
+    PosJugador=4;
+    
+    
     int Inputs=digitalRead(BtnArriba);
     if(Inputs==0)
         movimiento=0;
@@ -260,7 +265,7 @@ void MantenerBarreras(){
 }
 void LimpiarJuego(){
   for(int j=0;j<17;j++){
-    for(int i=0;i<8;i++){
+    for(int i=1;i<7;i++){
         Tablero[j][i]=0;
       
       }
@@ -290,6 +295,7 @@ void ModoPrueba(){
 
 void ContinuarJuego(){//Mover Obstaculos
   MostrarJuego();
+  
   GraficarMatriz2();
   PasosPoner++;
   PasosMover++;
@@ -337,7 +343,7 @@ if((Dificultad+4)-PasosPoner<0){//Poner Obstaculo
 }   
 delay(FrecuenciaJuego);
   if(Colisiono()){
-    
+    LimpiarJuego();
     ModoPantalla=4;//Terminar Juego  
     //MiliSegundos=0;
     //Segundos=0;
