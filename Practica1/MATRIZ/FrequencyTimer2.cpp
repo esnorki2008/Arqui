@@ -8,8 +8,8 @@
   Version 2.1 - updated by Paul Stoffregen, paul@pjrc.com
   for compatibility with Teensy 3.1
 
-  Version 2 - updated by Paul Stoffregen, paul@pjrc.com
-  for compatibility with newer hardware and Arduino 1.0
+  for compatibility with newer ha  Version 2 - updated by Paul Stoffregen, paul@pjrc.com
+rdware and Arduino 1.0
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
