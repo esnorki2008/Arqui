@@ -129,14 +129,20 @@ void Pausar_Fin(){
   int Inputs=digitalRead(BtnPausa);
     if(Inputs==0 && PresionadoAntes==false){
        if(ModoPantalla==3){
-        ModoPantalla=1;
-       }else{ 
+          ModoPantalla=1;
+       }else{
+          //Enlopar Hasta Dejar DePresionar
+          while(Inputs==0){
+            Inputs=digitalRead(BtnPausa);
+          } 
           ModoPantalla=0;
        }
      }  
      else{
+        if(PresionadoAntes)
+        delay(500);
         PresionadoAntes=false;
-        delay(1000);
+        
      }
 
    
@@ -330,10 +336,10 @@ if((Dificultad+4)-PasosPoner<0){//Poner Obstaculo
 }   
 delay(FrecuenciaJuego);
   if(Colisiono()){
-    NuevoJuego();
-    ModoPantalla=1;//Terminar Juego  
-    MiliSegundos=0;
-    Segundos=0;
+    
+    ModoPantalla=4;//Terminar Juego  
+    //MiliSegundos=0;
+    //Segundos=0;
   }  
 }
 void MostrarJuego(){
