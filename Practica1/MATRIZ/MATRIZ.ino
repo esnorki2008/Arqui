@@ -319,7 +319,7 @@ void ContinuarJuego(){//Mover Obstaculos
         TiempoPausa=0;  
     }
 
-    if(TiempoPausa>=3000){
+    if(TiempoPausa>=2500){
               ModoPantalla=3;//Ir A Pausa
             
     }
