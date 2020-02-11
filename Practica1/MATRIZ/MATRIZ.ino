@@ -35,14 +35,14 @@ int PasosMover=0;//Para Saber Si Se Mueven Obstaculos
 byte EstadoJuego=0; //0 NoIniciado  1 Empezado   2 Pausado   3 Finalizado
 int ModoPantalla=0;// 0 Nombre    1 CuentaRegresiva   2 Juego    3 Pausa   -1 ProbarMatrices
 //Pin Digitales Del Arduino    
-int pins[17]= {-1, 2, 3, 4, 5, 6, 7, 8, 9, 22, 24, 26,28,30, 32, 34,36};
+int pins[17]= {-1, 22, 24, 32, 7, 34, 5, 4, 28,6 , 3, 8,2,30, 9, 26,36};
 
 //Control de velocidad
 int velocidad = 0;
 //Control de movimiento
 int movimiento = 0;
 
-int rows[8] = {pins[1], pins[2], pins[5], pins[4], pins[3], pins[6], pins[7], pins[8]};
+int rows[8] = {pins[1], pins[2], pins[3], pins[4], pins[5], pins[6], pins[7], pins[8]};
 
 int cols[8] = {pins[16], pins[15], pins[14], pins[13], pins[12], pins[11], pins[10], pins[9]}; 
  
@@ -185,6 +185,7 @@ void GrupoEnPantalla(){
     //Mapea el dato del potenciometro
     //velocidad = map(velocidad, 0, 1024, 0, 255);
     velocidad= analogRead(analogPin) * (5.0 / 1023.0)*100;
+    
     Segundos=0;
     PosJugador=4;
     
@@ -202,7 +203,7 @@ void GrupoEnPantalla(){
         ModoPantalla=1;
     
     //Envia el dato del potenciometro como velocidad hacia la funcion DeslizarMatriz1
-    DeslizarMatriz1(pattern, velocidad, movimiento);
+    DeslizarMatriz1(pattern, 500-velocidad, movimiento);
     GraficarMatriz2();
 }
 /*Area Juego*/
@@ -328,7 +329,7 @@ void ContinuarJuego(){//Mover Obstaculos
   int Seg=Segundos;
   int Dificultad=CalcularDificultad(Seg);
   MiliSegundos=MiliSegundos+FrecuenciaJuego;
-if((Dificultad-5)-PasosMover<0){//Mover Obstaculos 
+if((Dificultad-5)-PasosMover<0 || Dificultad==6){//Mover Obstaculos 
   for(int j=15;j>0;j--){   
     for(int i=1;i<7;i++){
         Tablero[j][i]=Tablero[j-1][i];
@@ -397,7 +398,7 @@ void GraficarMatriz2()
 void EmpezarMatriz(){
   lc.shutdown(0,false); 
   lc.shutdown(1,false);
-  lc.setIntensity(0,0);  
+  lc.setIntensity(5,1);  
   lc.setIntensity(1,1);
   lc.clearDisplay(0); 
   lc.clearDisplay(1);  
@@ -420,6 +421,7 @@ void PatronIncial(int Num) {
 }
 //Actualiza Las Matrices Del Display Restando Posicion Actual
 void MoverArriba(int pattern, int del) {
+  Desp=7;
   PosY--;
   if(PosY<0){
     PosY=223;  
@@ -435,6 +437,7 @@ void MoverArriba(int pattern, int del) {
     delay(del);
 }
  void MoverAbajo(int pattern, int del) {
+  Desp=9;
   PosY++;
   if(PosY>223){
     PosY=0;  
