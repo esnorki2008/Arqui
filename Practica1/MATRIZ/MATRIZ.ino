@@ -20,6 +20,7 @@ int Desp=9;
 //Informacion Para El Juego
 int TiempoPausa=0;//Tiempo Presionado El De Pausa
 boolean PresionadoAntes=false;//Para Saber Si Fue Presionado
+boolean AntesPre=false;
 boolean EstuvoPausado=false;
 //
 int FrecuenciaJuego=100;
@@ -132,7 +133,7 @@ void Pausar_Fin(){
        if(ModoPantalla==3){
           ModoPantalla=1;
        }else{
-          //Enlopar Hasta Dejar DePresionar
+          //Enloopar Hasta Dejar DePresionar
           while(Inputs==0){
             Inputs=digitalRead(BtnPausa);
           } 
@@ -160,9 +161,6 @@ void CuentaRegresiva(){
     CargarADisplay(false);   
     GraficarMatriz2();
     MiliSegundos=MiliSegundos+1000;      
-    delay(1000);
-   
-    
     if(Seg>=3){
        ModoPantalla=2;
        
@@ -176,7 +174,11 @@ void CuentaRegresiva(){
        }
        else
        EstuvoPausado=false;
+    }else{
+    delay(1000);
     }
+    
+    
  }
 void GrupoEnPantalla(){
   
@@ -203,7 +205,7 @@ void GrupoEnPantalla(){
         ModoPantalla=1;
     
     //Envia el dato del potenciometro como velocidad hacia la funcion DeslizarMatriz1
-    DeslizarMatriz1(pattern, 500-velocidad, movimiento);
+    DeslizarMatriz1(pattern, velocidad, movimiento);
     GraficarMatriz2();
 }
 /*Area Juego*/
@@ -234,19 +236,19 @@ int CalcularDificultad(int Seg){
 
   switch(Seg/10){
     case 0:
-      Dificultad=35;
+      Dificultad=30;
     break;
     case 1:
-      Dificultad=30;
+      Dificultad=20;
     break; 
     case 2:
-      Dificultad=25;
+      Dificultad=15;
     break; 
     case 3:
-      Dificultad=20;
+      Dificultad=12;
     break;    
     case 4:
-      Dificultad=15;
+      Dificultad=11;
     break;  
     case 5:
       Dificultad=10;
@@ -311,17 +313,25 @@ void ContinuarJuego(){//Mover Obstaculos
     
     Inputs=digitalRead(BtnPausa);
     if(Inputs==0){
-      PresionadoAntes=true;
+      
       if(PresionadoAntes)
         TiempoPausa=TiempoPausa+FrecuenciaJuego;
+      AntesPre=true;
+      PresionadoAntes=true;
     }else{
         PresionadoAntes=false;
-        TiempoPausa=0;  
+        if(AntesPre){
+          AntesPre=false;
+        }{
+        TiempoPausa=0;
+       }  
     }
 
-    if(TiempoPausa>=2500){
+    if(TiempoPausa>=2300){
               ModoPantalla=3;//Ir A Pausa
             
+    }else{
+      delay(FrecuenciaJuego);  
     }
         
   //Fin Control
@@ -329,7 +339,10 @@ void ContinuarJuego(){//Mover Obstaculos
   int Seg=Segundos;
   int Dificultad=CalcularDificultad(Seg);
   MiliSegundos=MiliSegundos+FrecuenciaJuego;
-if((Dificultad-5)-PasosMover<0 || Dificultad==6){//Mover Obstaculos 
+  if(Dificultad==6)
+    FrecuenciaJuego=50;
+    
+if((Dificultad-5)-PasosMover<0 ||Dificultad==6){//Mover Obstaculos 
   for(int j=15;j>0;j--){   
     for(int i=1;i<7;i++){
         Tablero[j][i]=Tablero[j-1][i];
@@ -342,7 +355,7 @@ if((Dificultad+4)-PasosPoner<0){//Poner Obstaculo
   PasosPoner=0;
   CrearObstaculo();
 }   
-delay(FrecuenciaJuego);
+
   if(Colisiono()){
     LimpiarJuego();
     ModoPantalla=4;//Terminar Juego  
@@ -429,8 +442,10 @@ void MoverArriba(int pattern, int del) {
     for(int z=0;z<8;z++){
     for (int j = 0; j < 8; j++) {
       for (int i = 0; i < 8; i++) {
-        Leds[7-j][i] = Mensaje[NumLetra(PosY-j)][NumY(PosY-j)][0 + i];
-        Leds2[7-j][i] = Mensaje[NumLetra(PosY-j+Desp)][NumY(PosY-j+Desp)][0 + i];     
+        //Leds[7-j][i] = Mensaje[NumLetra(PosY-j)][NumY(PosY-j)][0 + i];
+        //Leds2[7-j][i] = Mensaje[NumLetra(PosY-j+Desp)][NumY(PosY-j+Desp)][0 + i];     
+        Leds[j][i] = Mensaje[NumLetra(PosY+j)][NumY(PosY+j)][0 + i];
+        Leds2[j][i] = Mensaje[NumLetra(PosY+j+Desp)][NumY(PosY+j+Desp)][0 + i]; 
       }     
     }  
     }
