@@ -66,11 +66,11 @@ void setup() {
   Serial.begin(9600); 
   //ModoPantalla=0;
   PosX=PosY=Letra=0;
-  // Configuramos los pinso como salida
+  // Pines De Salida
   for (int i = 1; i <= 16; i++) {
     pinMode(pins[i], OUTPUT);
   }
-  // inicializamos filas y columnas
+  // iniciar
   for (int i = 1; i <= 8; i++) {
     digitalWrite(cols[i - 1], LOW);
   }
@@ -142,11 +142,8 @@ void Pausar_Fin(){
      else{
         if(PresionadoAntes)
         delay(500);
-        PresionadoAntes=false;
-        
+        PresionadoAntes=false;  
      }
-
-   
   delay(50);
 }
 void CuentaRegresiva(){
