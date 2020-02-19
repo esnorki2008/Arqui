@@ -4,6 +4,8 @@ int Frecuencia=0;
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 int NumProductos=100;
 int S1,S0,S2,S3,Out;
+int trigger, eco, duracion, distancia;
+int peq, med, gra;
 
 void setup() {
   S1=30;
@@ -12,11 +14,20 @@ void setup() {
   S2=36;
   Out=38;
   
+  //Control de UltraSonico
+  peq = 7;
+  med = 6;
+  gra = 5;
+  trigger = 10;
+  eco = 9;
+  
   pinMode(S0,OUTPUT);
   pinMode(S1,OUTPUT);
   pinMode(S2,OUTPUT);
   pinMode(S3,OUTPUT);
   pinMode(Out,INPUT);
+  pinMode(trigger, OUTPUT);
+  pinMode(eco, INPUT);
   
   Serial.begin(9600); 
   lcd.begin(16, 2);
@@ -30,8 +41,28 @@ void setup() {
 void loop() {
   CadenaFuncionamiento();
   ComprobarColor();
+  ComprobarDistancia();
+}
+
+void ComprobarDistancia(){
+  digitalWrite(trigger, HIGH);
+  delay(1);
+  digitalWrite(trigger, LOW);
+  
+  duracion = pulseIn(eco, HIGH);
+  distancia = duracion / 58.2;
+  
+  if(DISTANCIA == peq){
+    Serial.println("Caja Pequeña");
+  } else if(DISTANCIA == med){
+    Serial.println("Caja Mediana");
+  } else if(DISTANCIA == gra){
+    Serial.println("Caja Grande");
+  }
   
 }
+
+
 void ComprobarColor(){
 
   
