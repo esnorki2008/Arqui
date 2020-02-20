@@ -1,25 +1,41 @@
 #include <LiquidCrystal.h>
+#include <Stepper.h>
 #include "Simbolos.h"
 int Frecuencia=0;
-LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+const int stepsPerRevolution = 300;
+Stepper myStepper = Stepper(stepsPerRevolution, 8, 10, 9, 11);
+LiquidCrystal lcd(23, 25, 27, 29, 31, 33);
 int NumProductos=100;
-int S1,S0,S2,S3,Out;
+//int S1,S0,S2,S3,Out;
 int trigger, eco, duracion, distancia;
 int peq, med, gra;
 
+int size = 0;
+int color = 0;
+
+int cRojo = 0;
+int cAzul = 0;
+int cVerde = 0;
+
+bool pasoColor = false;
+bool calcularColor = false;
+
+#define S0 4
+#define S1 3
+#define S2 6
+#define S3 7
+#define Out 5
 void setup() {
-  S1=30;
-  S0=32;
-  S3=34;
-  S2=36;
-  Out=38;
-  
+
+  myStepper.setSpeed(5);
+
   //Control de UltraSonico
-  peq = 7;
-  med = 6;
-  gra = 5;
-  trigger = 10;
-  eco = 9;
+  peq = 5;
+  med = 4;
+  gra = 2;
+  trigger = 24;
+  eco = 22;
   
   pinMode(S0,OUTPUT);
   pinMode(S1,OUTPUT);
@@ -29,13 +45,18 @@ void setup() {
   pinMode(trigger, OUTPUT);
   pinMode(eco, INPUT);
   
+  pinMode(S0,OUTPUT);
+  pinMode(S1,OUTPUT);
+  pinMode(S2,OUTPUT);
+  pinMode(S3,OUTPUT);
+  pinMode(Out,INPUT);
   Serial.begin(9600); 
   lcd.begin(16, 2);
-
+  
 
  
-  digitalWrite(S0, HIGH);
-  digitalWrite(S1, LOW);
+  digitalWrite(S0, LOW);
+  digitalWrite(S1, HIGH);
 }
 
 void loop() {
@@ -51,50 +72,94 @@ void ComprobarDistancia(){
   
   duracion = pulseIn(eco, HIGH);
   distancia = duracion / 58.2;
-  
-  if(DISTANCIA == peq){
-    Serial.println("Caja Pequeña");
-  } else if(DISTANCIA == med){
-    Serial.println("Caja Mediana");
-  } else if(DISTANCIA == gra){
-    Serial.println("Caja Grande");
+  if(distancia < 0 || distancia > 6){
+    distancia = 6;
   }
-  
+  if(distancia == peq){
+    Serial.println("Caja Pequeña");
+  } else if(distancia == med){
+    Serial.println("Caja Mediana");
+  } else if(distancia == gra ){
+    Serial.println("Caja Grande");
+  }else{
+    Serial.println(distancia); 
+   }
 }
 
 
 void ComprobarColor(){
 
+  int Delay=100;
+  
   
   digitalWrite(S2, LOW);
   digitalWrite(S3, LOW);
+
+  
   Frecuencia=pulseIn(Out,LOW);
-  Frecuencia =map(Frecuencia,350,20,0,255);
-  Serial.print("R=");
-  Serial.print(Frecuencia);  
-  Serial.print("    ");
-  delay(100);
+  cRojo =map(Frecuencia,2250,650,0,255);
+  /*Serial.print("R=");
+  Serial.print(cRojo);  
+  Serial.print("    ");*/
+  delay(Delay);
 
   
   digitalWrite(S2, HIGH);
   digitalWrite(S3, HIGH);
   Frecuencia=pulseIn(Out,LOW);
-  Frecuencia =map(Frecuencia,350,20,0,255);
-  Serial.print("G=");
-  Serial.print(Frecuencia);  
-  Serial.print("    ");
-  delay(100);
+  cVerde =map(Frecuencia,2250,650,0,255);
+  /*Serial.print("G=");
+  Serial.print(cVerde);  
+  Serial.print("    ");*/
+  delay(Delay);
 
 
   digitalWrite(S2, LOW);
   digitalWrite(S3, HIGH);
   Frecuencia=pulseIn(Out,LOW);
-  Frecuencia =map(Frecuencia,350,20,0,255);
-  Serial.print("B=");
-  Serial.print(Frecuencia);  
+  cAzul =map(Frecuencia,2250,650,0,255);
+  /*Serial.print("B=");
+  Serial.print(cAzul);*/  
+
+  Serial.print("Rojo: ");
+  Serial.print(cRojo);
+  Serial.print(" Verde: ");
+  Serial.print(cVerde);
+  Serial.print(" Azul: ");
+  Serial.print(cAzul);
+  Serial.println("  ");
+
+  //Rojo = 1; Verde = 2; Azul = 3
+  if(cVerde < 0 && cRojo < 0){
+    Serial.println("Nada");
+    if(pasoColor == true){
+      calcularColor = true;
+      color = 0;
+    }
+  } else {
+    if(cVerde > cRojo && cVerde > 30 && cAzul < 100){
+      color = 2;
+      Serial.println("Verde");
+    }else if(cRojo > cAzul && cRojo > cVerde){
+      if(color == 0){
+        color = 1;
+      }
+      Serial.println("Rojo");
+    } else if(cAzul > cRojo && cAzul > cVerde && cRojo < 40){
+      if(color == 0){
+        color = 3;
+      }
+      Serial.println("Azul");
+    } else if(cVerde > cRojo){
+      color = 2;
+      Serial.println("Verde");
+    }
+    pasoColor = true;
+  }
+  
   
   Serial.println("");
-  delay(100);
+  delay(Delay);
   
 }
 
