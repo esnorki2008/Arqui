@@ -301,7 +301,11 @@ void CadenaFinalRecipiente1(){
   lcd.setCursor(1,0);
   lcd.write((byte)2);
   lcd.setCursor(2,0);
-  lcd.print("G16–Recipiente");
+  lcd.print("G16");
+  lcd.setCursor(5,0);
+  lcd.print("–");
+  lcd.setCursor(6,0);
+  lcd.print("Recipiente");
   lcd.setCursor(0,1);
   lcd.print("1");
   lcd.setCursor(2,1);
@@ -324,7 +328,11 @@ void CadenaFinalRecipiente1(){
   lcd.setCursor(1,0);
   lcd.write((byte)2);
   lcd.setCursor(2,0);
-  lcd.print("G16–Recipiente");
+  lcd.print("G16");
+  lcd.setCursor(5,0);
+  lcd.print("–");
+  lcd.setCursor(6,0);
+  lcd.print("Recipiente");
   lcd.setCursor(0,1);
   lcd.print("2");
   lcd.setCursor(2,1);
@@ -347,7 +355,11 @@ void CadenaFinalRecipiente1(){
   lcd.setCursor(1,0);
   lcd.write((byte)2);
   lcd.setCursor(2,0);
-  lcd.print("G16–Recipiente");
+  lcd.print("G16");
+  lcd.setCursor(5,0);
+  lcd.print("–");
+  lcd.setCursor(6,0);
+  lcd.print("Recipiente");
   lcd.setCursor(0,1);
   lcd.print("3");
   lcd.setCursor(2,1);
