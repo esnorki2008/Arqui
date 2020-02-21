@@ -11,7 +11,7 @@ int NumProductos=100;
 int trigger, eco, duracion, distancia;
 int peq, med, gra;
 
-int size = 0;
+int tam = 0;
 int color = 0;
 
 int cRojo = 0;
@@ -19,7 +19,10 @@ int cAzul = 0;
 int cVerde = 0;
 
 bool pasoColor = false;
-bool calcularColor = false;
+bool pasoTam = false;
+bool salioTam = false;
+bool calcularDireccion = false;
+
 
 #define S0 4
 #define S1 3
@@ -63,6 +66,44 @@ void loop() {
   CadenaFuncionamiento();
   ComprobarColor();
   ComprobarDistancia();
+  if(calcularDireccion){
+    CalcularDireccion();
+  }
+}
+
+void CalcularDireccion(){
+  Serial.print("Color: ");
+  switch(color){
+    case 1:
+      Serial.print("Rojo");
+      break;
+    case 2:
+      Serial.print("Verde");
+      break;
+    case 3:
+      Serial.print("Azul");
+      break;
+  }
+  Serial.println("  ");
+  Serial.print("Tamaño: ");
+  switch(tam){
+    case 1:
+      Serial.print("Pequeña");
+      break;
+    case 2:
+      Serial.print("Mediana");
+      break;
+    case 3:
+      Serial.print("Grande");
+      break;
+  }
+  Serial.println("   ");
+
+  pasoColor = false;
+  pasoTam = false;
+  tam = 0;
+  color = 0;
+  calcularDireccion = false;
 }
 
 void ComprobarDistancia(){
@@ -75,14 +116,27 @@ void ComprobarDistancia(){
   if(distancia < 0 || distancia > 6){
     distancia = 6;
   }
+
+  //Pequeña = 1; Mediana = 2; Grande = 3
   if(distancia == peq){
-    Serial.println("Caja Pequeña");
+    if(tam == 0)
+      tam = 1;
+    pasoTam = true;
+    //Serial.println("Pequeña");
   } else if(distancia == med){
-    Serial.println("Caja Mediana");
+    if(tam < 2)
+      tam = 2;
+    pasoTam = true;
+    //Serial.println("Mediana");
   } else if(distancia == gra ){
-    Serial.println("Caja Grande");
+    if(tam < 3)
+      tam = 3;
+    pasoTam = true;
+    //Serial.println("Grande");
   }else{
-    Serial.println(distancia); 
+    if(pasoTam == true && pasoColor == true){
+      calcularDireccion = true;
+    }
    }
 }
 
@@ -98,9 +152,6 @@ void ComprobarColor(){
   
   Frecuencia=pulseIn(Out,LOW);
   cRojo =map(Frecuencia,2250,650,0,255);
-  /*Serial.print("R=");
-  Serial.print(cRojo);  
-  Serial.print("    ");*/
   delay(Delay);
 
   
@@ -108,9 +159,6 @@ void ComprobarColor(){
   digitalWrite(S3, HIGH);
   Frecuencia=pulseIn(Out,LOW);
   cVerde =map(Frecuencia,2250,650,0,255);
-  /*Serial.print("G=");
-  Serial.print(cVerde);  
-  Serial.print("    ");*/
   delay(Delay);
 
 
@@ -118,47 +166,25 @@ void ComprobarColor(){
   digitalWrite(S3, HIGH);
   Frecuencia=pulseIn(Out,LOW);
   cAzul =map(Frecuencia,2250,650,0,255);
-  /*Serial.print("B=");
-  Serial.print(cAzul);*/  
-
-  Serial.print("Rojo: ");
-  Serial.print(cRojo);
-  Serial.print(" Verde: ");
-  Serial.print(cVerde);
-  Serial.print(" Azul: ");
-  Serial.print(cAzul);
-  Serial.println("  ");
 
   //Rojo = 1; Verde = 2; Azul = 3
   if(cVerde < 0 && cRojo < 0){
-    Serial.println("Nada");
-    if(pasoColor == true){
-      calcularColor = true;
-      color = 0;
-    }
+    
   } else {
     if(cVerde > cRojo && cVerde > 30 && cAzul < 100){
       color = 2;
-      Serial.println("Verde");
     }else if(cRojo > cAzul && cRojo > cVerde){
-      if(color == 0){
-        color = 1;
-      }
-      Serial.println("Rojo");
+      color = 1;
     } else if(cAzul > cRojo && cAzul > cVerde && cRojo < 40){
       if(color == 0){
         color = 3;
       }
-      Serial.println("Azul");
     } else if(cVerde > cRojo){
       color = 2;
-      Serial.println("Verde");
     }
     pasoColor = true;
   }
   
-  
-  Serial.println("");
   delay(Delay);
   
 }
