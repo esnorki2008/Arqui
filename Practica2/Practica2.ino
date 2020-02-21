@@ -208,7 +208,8 @@ void CadenaFinalRecipiente1(){
   lcd.createChar(0,Dolar);
   lcd.createChar(1,Interrogacion);
   lcd.setCursor(0,0);
-  lcd.createChar(1,DoblePunto);
+  lcd.createChar(2,DoblePunto);
+  lcd.createChar(3,Amperson);
   lcd.write((byte)1);
   lcd.setCursor(1,0);
   lcd.write((byte)2);
@@ -230,7 +231,7 @@ void CadenaFinalRecipiente2(){
   lcd.createChar(0,Dolar);
   lcd.createChar(1,Interrogacion);
   lcd.setCursor(0,0);
-  lcd.createChar(1,DoblePunto);
+  lcd.createChar(2,DoblePunto);
   lcd.write((byte)1);
   lcd.setCursor(1,0);
   lcd.write((byte)2);
@@ -252,7 +253,7 @@ void CadenaFinalRecipiente3(){
   lcd.createChar(0,Dolar);
   lcd.createChar(1,Interrogacion);
   lcd.setCursor(0,0);
-  lcd.createChar(1,DoblePunto);
+  lcd.createChar(2,DoblePunto);
   lcd.write((byte)1);
   lcd.setCursor(1,0);
   lcd.write((byte)2);
