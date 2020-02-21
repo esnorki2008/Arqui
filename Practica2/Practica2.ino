@@ -296,6 +296,7 @@ void CadenaFinalRecipiente1(){
   lcd.createChar(1,Interrogacion);
   lcd.createChar(2,DoblePunto);
   lcd.createChar(3,Amperson);
+  lcd.createChar(4,Guion);
   lcd.setCursor(0,0);
   lcd.write((byte)1);
   lcd.setCursor(1,0);
@@ -303,7 +304,7 @@ void CadenaFinalRecipiente1(){
   lcd.setCursor(2,0);
   lcd.print("G16");
   lcd.setCursor(5,0);
-  lcd.print("–");
+  lcd.write((byte)4);
   lcd.setCursor(6,0);
   lcd.print("Recipiente");
   lcd.setCursor(0,1);
@@ -323,6 +324,7 @@ void CadenaFinalRecipiente1(){
   lcd.createChar(1,Interrogacion);
   lcd.createChar(2,DoblePunto);
   lcd.createChar(3,Amperson);
+  lcd.createChar(4,Guion);
   lcd.setCursor(0,0);
   lcd.write((byte)1);
   lcd.setCursor(1,0);
@@ -330,7 +332,7 @@ void CadenaFinalRecipiente1(){
   lcd.setCursor(2,0);
   lcd.print("G16");
   lcd.setCursor(5,0);
-  lcd.print("–");
+  lcd.write((byte)4);
   lcd.setCursor(6,0);
   lcd.print("Recipiente");
   lcd.setCursor(0,1);
@@ -350,6 +352,7 @@ void CadenaFinalRecipiente1(){
   lcd.createChar(1,Interrogacion);
   lcd.createChar(2,DoblePunto);
   lcd.createChar(3,Amperson);
+  lcd.createChar(4,Guion);
   lcd.setCursor(0,0);
   lcd.write((byte)1);
   lcd.setCursor(1,0);
@@ -357,7 +360,7 @@ void CadenaFinalRecipiente1(){
   lcd.setCursor(2,0);
   lcd.print("G16");
   lcd.setCursor(5,0);
-  lcd.print("–");
+  lcd.write((byte)4);
   lcd.setCursor(6,0);
   lcd.print("Recipiente");
   lcd.setCursor(0,1);
