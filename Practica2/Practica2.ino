@@ -194,9 +194,9 @@ void CadenaFuncionamiento(){
   lcd.setCursor(0,0);
   lcd.print("G16 - Total");
   lcd.setCursor(0,1);
+  lcd.print(ProductosTotales);
+  lcd.setCursor(3,1);
   lcd.print("Productos-");
-  lcd.setCursor(11,1);
-  lcd.print(NumProductos);
   lcd.createChar(0,CaraFeliz);
   lcd.setCursor(15,1);
   lcd.write((byte)0);
@@ -206,4 +206,69 @@ void CadenaFuncionamiento(){
   lcd.createChar(1,Amperson);
   lcd.setCursor(1,1);
   lcd.write((byte)1);*/
+}
+void CadenaFinalRecipiente1(){
+  lcd.createChar(0,Dolar);
+  lcd.createChar(1,Interrogacion);
+  lcd.setCursor(0,0);
+  lcd.createChar(1,DoblePunto);
+  lcd.write((byte)1);
+  lcd.setCursor(1,0);
+  lcd.write((byte)2);
+  lcd.setCursor(2,0);
+  lcd.print("G16–Recipiente");
+  lcd.setCursor(0,1);
+  lcd.print("1");
+  lcd.setCursor(2,1);
+  lcd.print(ProductosRecipiente1);
+  lcd.setCursor(4,1);
+  lcd.print("Productos-");
+  lcd.setCursor(14,1);
+  lcd.write((byte)0);
+  lcd.setCursor(15,1);
+  lcd.write((byte)1);
+}
+
+void CadenaFinalRecipiente2(){
+  lcd.createChar(0,Dolar);
+  lcd.createChar(1,Interrogacion);
+  lcd.setCursor(0,0);
+  lcd.createChar(1,DoblePunto);
+  lcd.write((byte)1);
+  lcd.setCursor(1,0);
+  lcd.write((byte)2);
+  lcd.setCursor(2,0);
+  lcd.print("G16–Recipiente");
+  lcd.setCursor(0,1);
+  lcd.print("2");
+  lcd.setCursor(2,1);
+  lcd.print(ProductosRecipiente2);
+  lcd.setCursor(4,1);
+  lcd.print("Productos-");
+  lcd.setCursor(14,1);
+  lcd.write((byte)0);
+  lcd.setCursor(15,1);
+  lcd.write((byte)1);
+}
+
+void CadenaFinalRecipiente3(){
+  lcd.createChar(0,Dolar);
+  lcd.createChar(1,Interrogacion);
+  lcd.setCursor(0,0);
+  lcd.createChar(1,DoblePunto);
+  lcd.write((byte)1);
+  lcd.setCursor(1,0);
+  lcd.write((byte)2);
+  lcd.setCursor(2,0);
+  lcd.print("G16–Recipiente");
+  lcd.setCursor(0,1);
+  lcd.print("3");
+  lcd.setCursor(2,1);
+  lcd.print(ProductosRecipiente3);
+  lcd.setCursor(4,1);
+  lcd.print("Productos-");
+  lcd.setCursor(14,1);
+  lcd.write((byte)0);
+  lcd.setCursor(15,1);
+  lcd.write((byte)1);
 }
