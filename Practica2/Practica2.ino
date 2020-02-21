@@ -30,34 +30,24 @@ bool calcularDireccion = false;
 #define S3 7
 #define Out 5
 void setup() {
-
   myStepper.setSpeed(5);
-
   //Control de UltraSonico
   peq = 5;
   med = 4;
   gra = 2;
   trigger = 24;
   eco = 22;
-  
-  pinMode(S0,OUTPUT);
-  pinMode(S1,OUTPUT);
-  pinMode(S2,OUTPUT);
-  pinMode(S3,OUTPUT);
-  pinMode(Out,INPUT);
   pinMode(trigger, OUTPUT);
   pinMode(eco, INPUT);
-  
+  //Iniciar Color
   pinMode(S0,OUTPUT);
   pinMode(S1,OUTPUT);
   pinMode(S2,OUTPUT);
   pinMode(S3,OUTPUT);
   pinMode(Out,INPUT);
+  //Iniciar Pantalla
   Serial.begin(9600); 
   lcd.begin(16, 2);
-  
-
- 
   digitalWrite(S0, LOW);
   digitalWrite(S1, HIGH);
 }
@@ -200,12 +190,7 @@ void CadenaFuncionamiento(){
   lcd.createChar(0,CaraFeliz);
   lcd.setCursor(15,1);
   lcd.write((byte)0);
-  /*lcd.createChar(0,CaraFeliz);
-  lcd.setCursor(0,1);
-  lcd.write((byte)0);
-  lcd.createChar(1,Amperson);
-  lcd.setCursor(1,1);
-  lcd.write((byte)1);*/
+
 }
 void CadenaFinalRecipiente1(){
   lcd.createChar(0,Dolar);
