@@ -313,7 +313,7 @@ void CadenaFinalRecipiente1(){
   lcd.print(ProductosRecipiente1);
   lcd.setCursor(4,1);
   lcd.print("Productos-");
-  lcd.setCursor(14,1);
+  lcd.setCursor(13,1);
   lcd.write((byte)0);
   lcd.setCursor(15,1);
   lcd.write((byte)3);
@@ -341,7 +341,7 @@ void CadenaFinalRecipiente1(){
   lcd.print(ProductosRecipiente1);
   lcd.setCursor(4,1);
   lcd.print("Productos-");
-  lcd.setCursor(14,1);
+  lcd.setCursor(13,1);
   lcd.write((byte)0);
   lcd.setCursor(15,1);
   lcd.write((byte)3);
@@ -369,7 +369,7 @@ void CadenaFinalRecipiente1(){
   lcd.print(ProductosRecipiente1);
   lcd.setCursor(4,1);
   lcd.print("Productos-");
-  lcd.setCursor(14,1);
+  lcd.setCursor(13,1);
   lcd.write((byte)0);
   lcd.setCursor(15,1);
   lcd.write((byte)3);
