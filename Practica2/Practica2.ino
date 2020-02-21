@@ -10,7 +10,9 @@ int NumProductos=100;
 //int S1,S0,S2,S3,Out;
 int trigger, eco, duracion, distancia;
 int peq, med, gra;
-
+int BtnDetener++;
+//El Estado De La Banda
+bool EstaFuncionando;
 int tam = 0;
 int color = 0;
 
@@ -30,6 +32,11 @@ bool calcularDireccion = false;
 #define S3 7
 #define Out 5
 void setup() {
+  EstaFuncionando=false;
+  //Boton Entrada
+  pinMode(BtnDetener,INPUT);
+  digitalWrite(BtnDetener, HIGH);
+  //
   myStepper.setSpeed(5);
   //Control de UltraSonico
   peq = 5;
@@ -53,6 +60,11 @@ void setup() {
 }
 
 void loop() {
+  //Lectura Detener
+  int Inputs=digitalRead(BtnDetener);
+  if(Inputs==0){
+    //Se Presiono El Boton
+  }
   CadenaFuncionamiento();
   ComprobarColor();
   ComprobarDistancia();
