@@ -1,20 +1,25 @@
 #include <LiquidCrystal.h>
 #include <Stepper.h>
 #include "Simbolos.h"
-int Frecuencia=0;
+int Frecuencia = 0;
 
-const int stepsPerRevolution = 300;
+const int stepsPerRevolution = 200;
 Stepper myStepper = Stepper(stepsPerRevolution, 8, 10, 9, 11);
 LiquidCrystal lcd(23, 25, 27, 29, 31, 33);
-int NumProductos=100;
+int NumProductos = 100;
 //int S1,S0,S2,S3,Out;
 int trigger, eco, duracion, distancia;
 int peq, med, gra;
-int BtnDetener++;
+
+int BtnDetener = 0;
 //El Estado De La Banda
 bool EstaFuncionando;
 int tam = 0;
 int color = 0;
+int ProductosTotales;
+int ProductosRecipiente1;
+int ProductosRecipiente2;
+int ProductosRecipiente3;
 
 int cRojo = 0;
 int cAzul = 0;
@@ -32,178 +37,260 @@ bool calcularDireccion = false;
 #define S3 7
 #define Out 5
 void setup() {
-  EstaFuncionando=false;
+
+  ProductosTotales = 0;
+  ProductosRecipiente1 = 0;
+  ProductosRecipiente2 = 0;
+  ProductosRecipiente3 = 0;
+    EstaFuncionando=false;
   //Boton Entrada
   pinMode(BtnDetener,INPUT);
   digitalWrite(BtnDetener, HIGH);
-  //
-  myStepper.setSpeed(5);
+  myStepper.setSpeed(35);
+
   //Control de UltraSonico
   peq = 5;
   med = 4;
-  gra = 2;
+  gra = 3;
   trigger = 24;
   eco = 22;
+
   pinMode(trigger, OUTPUT);
   pinMode(eco, INPUT);
+
   //Iniciar Color
-  pinMode(S0,OUTPUT);
-  pinMode(S1,OUTPUT);
-  pinMode(S2,OUTPUT);
-  pinMode(S3,OUTPUT);
-  pinMode(Out,INPUT);
+  pinMode(S0, OUTPUT);
+  pinMode(S1, OUTPUT);
+  pinMode(S2, OUTPUT);
+  pinMode(S3, OUTPUT);
+  pinMode(Out, INPUT);
+
   //Iniciar Pantalla
-  Serial.begin(9600); 
+  Serial.begin(9600);
   lcd.begin(16, 2);
+
+
+
   digitalWrite(S0, LOW);
   digitalWrite(S1, HIGH);
 }
 
 void loop() {
-  //Lectura Detener
   int Inputs=digitalRead(BtnDetener);
   if(Inputs==0){
     //Se Presiono El Boton
+    if(EstaFuncionando){
+      CadenaFinalRecipiente1();
+      delay(60000);
+      CadenaFinalRecipiente2();
+      delay(60000);
+      CadenaFinalRecipiente3();
+      delay(60000);
+      EstaFuncionando = false;
+    } else {
+      EstaFuncionando = true;
+    }
+  } else {
+    CadenaFuncionamiento();
+  if (color == 0) {
+    ComprobarColor();
   }
-  CadenaFuncionamiento();
-  ComprobarColor();
   ComprobarDistancia();
-  if(calcularDireccion){
+  if (calcularDireccion) {
     CalcularDireccion();
+
+    pasoColor = false;
+    pasoTam = false;
+    tam = 0;
+    color = 0;
+    calcularDireccion = false;
+  }
   }
 }
 
-void CalcularDireccion(){
-  Serial.print("Color: ");
-  switch(color){
+void MoverRecipiente(int numero) {
+  if(ProductosTotales == 9){
+    ProductosTotales = 0;
+  } else {
+    ProductosTotales++;
+  }
+  switch (numero) {
     case 1:
-      Serial.print("Rojo");
-      break;
-    case 2:
-      Serial.print("Verde");
+      myStepper.step(-stepsPerRevolution);
+      delay(2000);
+      myStepper.step(stepsPerRevolution);
       break;
     case 3:
-      Serial.print("Azul");
+      myStepper.step(stepsPerRevolution);
+      delay(2000);
+      myStepper.step(-stepsPerRevolution);
       break;
   }
-  Serial.println("  ");
-  Serial.print("Tamaño: ");
-  switch(tam){
-    case 1:
-      Serial.print("Pequeña");
-      break;
-    case 2:
-      Serial.print("Mediana");
-      break;
-    case 3:
-      Serial.print("Grande");
-      break;
-  }
-  Serial.println("   ");
-
-  pasoColor = false;
-  pasoTam = false;
-  tam = 0;
-  color = 0;
-  calcularDireccion = false;
 }
 
-void ComprobarDistancia(){
+void CalcularDireccion() {
+  delay(1500);
+  switch (color) {
+    case 1:
+      switch (tam) {
+        case 1:
+          //Rojo y Pequeña
+          //Recipiente 2
+          MoverRecipiente(2);
+          break;
+        case 2:
+          //Rojo y Mediana
+          //Recipiente 1
+          MoverRecipiente(1);
+          break;
+        case 3:
+          //Rojo y Grande
+          //Recipiente 3
+          MoverRecipiente(3);
+          break;
+      }
+      break;
+    case 2:
+      switch (tam) {
+        case 1:
+          //Verde y Pequeña
+          //Recipiente 3
+          MoverRecipiente(3);
+          break;
+        case 2:
+          //Verde y Mediana
+          //Recipiente 2
+          MoverRecipiente(2);
+          break;
+        case 3:
+          //Verde y Grande
+          //Recipiente 1
+          MoverRecipiente(1);
+          break;
+      }
+      break;
+    case 3:
+      switch (tam) {
+        case 1:
+          //Azul y Pequeña
+          //Recipiente 1
+          MoverRecipiente(1);
+          break;
+        case 2:
+          //Azul y Mediana
+          //Recipiente 3
+          MoverRecipiente(3);
+          break;
+        case 3:
+          //Azul y Grande
+          //Recipiente 2
+          MoverRecipiente(2);
+          break;
+      }
+      break;
+  }
+}
+
+void ComprobarDistancia() {
   digitalWrite(trigger, HIGH);
   delay(1);
   digitalWrite(trigger, LOW);
-  
+
   duracion = pulseIn(eco, HIGH);
   distancia = duracion / 58.2;
-  if(distancia < 0 || distancia > 6){
+  if (distancia < 0 || distancia > 6) {
     distancia = 6;
   }
 
   //Pequeña = 1; Mediana = 2; Grande = 3
-  if(distancia == peq){
-    if(tam == 0)
+  if (distancia == peq) {
+    if (tam == 0)
       tam = 1;
-    pasoTam = true;
-    //Serial.println("Pequeña");
-  } else if(distancia == med){
-    if(tam < 2)
+    Serial.println("Pequeña");
+    if (pasoColor == true)
+      pasoTam = true;
+  } else if (distancia == med) {
+    if (tam < 2)
       tam = 2;
-    pasoTam = true;
-    //Serial.println("Mediana");
-  } else if(distancia == gra ){
-    if(tam < 3)
+    Serial.println("Mediana");
+    if (pasoColor == true)
+      pasoTam = true;
+  } else if (distancia == gra ) {
+    if (tam < 3)
       tam = 3;
-    pasoTam = true;
-    //Serial.println("Grande");
-  }else{
-    if(pasoTam == true && pasoColor == true){
+    Serial.println("Grande");
+    if (pasoColor == true)
+      pasoTam = true;
+  } else {
+    if (pasoTam == true && pasoColor == true) {
       calcularDireccion = true;
     }
-   }
+  }
 }
 
 
-void ComprobarColor(){
-
-  int Delay=100;
-  
-  
+void ComprobarColor() {
+  int Delay = 100;
   digitalWrite(S2, LOW);
   digitalWrite(S3, LOW);
-
-  
-  Frecuencia=pulseIn(Out,LOW);
-  cRojo =map(Frecuencia,2250,650,0,255);
+  //Rojo
+  Frecuencia = pulseIn(Out, LOW);
+  cRojo = map(Frecuencia, 2250, 650, 0, 255);
   delay(Delay);
-
-  
+  //Verde
   digitalWrite(S2, HIGH);
   digitalWrite(S3, HIGH);
-  Frecuencia=pulseIn(Out,LOW);
-  cVerde =map(Frecuencia,2250,650,0,255);
+  Frecuencia = pulseIn(Out, LOW);
+  cVerde = map(Frecuencia, 2250, 650, 0, 255);
   delay(Delay);
-
-
+  //Azul
   digitalWrite(S2, LOW);
   digitalWrite(S3, HIGH);
-  Frecuencia=pulseIn(Out,LOW);
-  cAzul =map(Frecuencia,2250,650,0,255);
+  Frecuencia = pulseIn(Out, LOW);
+  cAzul = map(Frecuencia, 2250, 650, 0, 255);
+
+  /*Serial.print(cRojo);
+  Serial.print("  ");
+  Serial.print(cVerde);
+  Serial.print("  ");
+  Serial.print(cAzul);
+  Serial.println("   ");*/
 
   //Rojo = 1; Verde = 2; Azul = 3
-  if(cVerde < 0 && cRojo < 0){
-    
+  if (cRojo < 0 && cVerde < 0 && cAzul < 60) {
+    //Falso Azul
   } else {
-    if(cVerde > cRojo && cVerde > 30 && cAzul < 100){
-      color = 2;
-    }else if(cRojo > cAzul && cRojo > cVerde){
+    if (cAzul > cRojo && cAzul > cVerde && cRojo < 100 && cAzul >= 60 ) {
+      //Azul
+      color = 3;
+      Serial.println("Azul");
+    } else if ((cRojo > 0 && cVerde < 0) || (cRojo > cVerde && cRojo > cAzul) || (cRojo >= 0 && cAzul >= 0 && cVerde < 0)) {
+      //Rojo
       color = 1;
-    } else if(cAzul > cRojo && cAzul > cVerde && cRojo < 40){
-      if(color == 0){
-        color = 3;
-      }
-    } else if(cVerde > cRojo){
+      Serial.println("Rojo");
+    } else {
+      //Verde
       color = 2;
+      Serial.println("Verde");
     }
     pasoColor = true;
   }
-  
   delay(Delay);
-  
 }
 
 //Cadena Mientras Estan En Funcionamiento
-void CadenaFuncionamiento(){
-  lcd.setCursor(0,0);
+void CadenaFuncionamiento() {
+  lcd.setCursor(0, 0);
   lcd.print("G16 - Total");
-  lcd.setCursor(0,1);
-  lcd.print(ProductosTotales);
-  lcd.setCursor(3,1);
+  lcd.setCursor(0, 1);
   lcd.print("Productos-");
-  lcd.createChar(0,CaraFeliz);
-  lcd.setCursor(15,1);
+  lcd.setCursor(10, 1);
+  lcd.print(ProductosTotales);
+  lcd.createChar(0, CaraFeliz);
+  lcd.setCursor(15, 1);
   lcd.write((byte)0);
-
 }
+
 void CadenaFinalRecipiente1(){
   lcd.createChar(0,Dolar);
   lcd.createChar(1,Interrogacion);
@@ -225,9 +312,9 @@ void CadenaFinalRecipiente1(){
   lcd.write((byte)0);
   lcd.setCursor(15,1);
   lcd.write((byte)1);
-}
+  }
 
-void CadenaFinalRecipiente2(){
+  void CadenaFinalRecipiente2(){
   lcd.createChar(0,Dolar);
   lcd.createChar(1,Interrogacion);
   lcd.setCursor(0,0);
@@ -247,9 +334,9 @@ void CadenaFinalRecipiente2(){
   lcd.write((byte)0);
   lcd.setCursor(15,1);
   lcd.write((byte)1);
-}
+  }
 
-void CadenaFinalRecipiente3(){
+  void CadenaFinalRecipiente3(){
   lcd.createChar(0,Dolar);
   lcd.createChar(1,Interrogacion);
   lcd.setCursor(0,0);
@@ -269,4 +356,4 @@ void CadenaFinalRecipiente3(){
   lcd.write((byte)0);
   lcd.setCursor(15,1);
   lcd.write((byte)1);
-}
+  }
