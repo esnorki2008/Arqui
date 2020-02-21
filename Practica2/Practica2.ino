@@ -294,9 +294,9 @@ void CadenaFuncionamiento() {
 void CadenaFinalRecipiente1(){
   lcd.createChar(0,Dolar);
   lcd.createChar(1,Interrogacion);
-  lcd.setCursor(0,0);
   lcd.createChar(2,DoblePunto);
   lcd.createChar(3,Amperson);
+  lcd.setCursor(0,0);
   lcd.write((byte)1);
   lcd.setCursor(1,0);
   lcd.write((byte)2);
@@ -311,14 +311,15 @@ void CadenaFinalRecipiente1(){
   lcd.setCursor(14,1);
   lcd.write((byte)0);
   lcd.setCursor(15,1);
-  lcd.write((byte)1);
+  lcd.write((byte)3);
   }
 
   void CadenaFinalRecipiente2(){
   lcd.createChar(0,Dolar);
   lcd.createChar(1,Interrogacion);
-  lcd.setCursor(0,0);
   lcd.createChar(2,DoblePunto);
+  lcd.createChar(3,Amperson);
+  lcd.setCursor(0,0);
   lcd.write((byte)1);
   lcd.setCursor(1,0);
   lcd.write((byte)2);
@@ -327,20 +328,21 @@ void CadenaFinalRecipiente1(){
   lcd.setCursor(0,1);
   lcd.print("2");
   lcd.setCursor(2,1);
-  lcd.print(ProductosRecipiente2);
+  lcd.print(ProductosRecipiente1);
   lcd.setCursor(4,1);
   lcd.print("Productos-");
   lcd.setCursor(14,1);
   lcd.write((byte)0);
   lcd.setCursor(15,1);
-  lcd.write((byte)1);
+  lcd.write((byte)3);
   }
 
   void CadenaFinalRecipiente3(){
   lcd.createChar(0,Dolar);
   lcd.createChar(1,Interrogacion);
-  lcd.setCursor(0,0);
   lcd.createChar(2,DoblePunto);
+  lcd.createChar(3,Amperson);
+  lcd.setCursor(0,0);
   lcd.write((byte)1);
   lcd.setCursor(1,0);
   lcd.write((byte)2);
@@ -349,11 +351,11 @@ void CadenaFinalRecipiente1(){
   lcd.setCursor(0,1);
   lcd.print("3");
   lcd.setCursor(2,1);
-  lcd.print(ProductosRecipiente3);
+  lcd.print(ProductosRecipiente1);
   lcd.setCursor(4,1);
   lcd.print("Productos-");
   lcd.setCursor(14,1);
   lcd.write((byte)0);
   lcd.setCursor(15,1);
-  lcd.write((byte)1);
+  lcd.write((byte)3);
   }
