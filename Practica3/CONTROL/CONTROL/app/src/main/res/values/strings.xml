@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">CONTROL</string>
+    <string name="control_led">control led</string>
+    <string name="encender">encender</string>
+    <string name="apagar">apagar</string>
+    <string name="desconectar">Desconectar</string>
+    <string name="dato">Dato:</string>
+    <string name="dispositivos_conectados">DISPOSITIVOS CONECTADOS</string>
+</resources>

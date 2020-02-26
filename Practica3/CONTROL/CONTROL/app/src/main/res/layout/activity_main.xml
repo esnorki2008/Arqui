@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/idcontrol"
+        android:layout_width="308dp"
+        android:layout_height="39dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="52dp"
+        android:text="@string/control_led"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/encender"
+        android:layout_width="126dp"
+        android:layout_height="37dp"
+        android:layout_below="@+id/idcontrol"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="58dp"
+        android:layout_marginTop="70dp"
+        android:text="@string/encender" />
+
+    <Button
+        android:id="@+id/idapagar"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/idcontrol"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="63dp"
+        android:layout_marginTop="63dp"
+        android:layout_marginEnd="45dp"
+        android:layout_toEndOf="@+id/encender"
+        android:text="@string/apagar" />
+
+    <TextView
+        android:id="@+id/idbuffern"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/encender"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="59dp"
+        android:layout_marginEnd="227dp"
+        android:text="@string/dato"
+        android:textAlignment="viewStart"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/iddesconectar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/idbuffern"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="124dp"
+        android:text="@string/desconectar" />
+</RelativeLayout>
