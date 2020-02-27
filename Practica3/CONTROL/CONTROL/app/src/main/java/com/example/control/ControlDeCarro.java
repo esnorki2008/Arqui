@@ -39,7 +39,7 @@ public class ControlDeCarro extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_control_de_carro);
         //2)
 
         BtnArriba = (Button) findViewById(R.id.BtnArriba);
@@ -105,19 +105,31 @@ public class ControlDeCarro extends AppCompatActivity {
         BtnLimpiar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                InfoEnvia("limpiar");
+                String info = ((TextView) v).getText().toString();
+                String address = info.substring(info.length() - 17);
+                Intent i = new Intent(ControlDeCarro.this, Guardar.class);
+                i.putExtra(ControlDeCarro.address, address);
+                startActivity(i);
             }
         });
         BtnGuardar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                InfoEnvia("guardar");
+                String info = ((TextView) v).getText().toString();
+                String address = info.substring(info.length() - 17);
+                Intent i = new Intent(ControlDeCarro.this, Recorrer.class);
+                i.putExtra(ControlDeCarro.address, address);
+                startActivity(i);
             }
         });
         BtnRecorrer.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                InfoEnvia("recorrer");
+                String info = ((TextView) v).getText().toString();
+                String address = info.substring(info.length() - 17);
+                Intent i = new Intent(ControlDeCarro.this, Guardar.class);
+                i.putExtra(ControlDeCarro.address, address);
+                startActivity(i);
             }
         });
         /*IdDesconectar.setOnClickListener(new View.OnClickListener() {

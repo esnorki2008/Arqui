@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Guardar">
+
+    <TextView
+        android:id="@+id/LblTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:text="Recorrer Ruta Guardada"
+        android:textSize="36sp" />
+
+    <Button
+        android:id="@+id/BtnRecorrer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/LblTitulo"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="457dp"
+        android:text="Recorrer"
+        android:textSize="24sp" />
+
+    <ScrollView
+        android:id="@+id/Conte"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/LblTitulo"
+        android:layout_marginTop="141dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/LstRutas"
+                android:layout_width="wrap_content"
+                android:layout_height="264dp">
+
+            </ListView>
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/LblGuardado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/LblTitulo"
+        android:layout_marginTop="43dp"
+        android:text="Ruta Seleccionada:"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/BtnLimpiar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/LblTitulo"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="234dp"
+        android:layout_marginTop="459dp"
+        android:text="Limpiar"
+        android:textSize="24sp" />
+
+    <ScrollView
+        android:id="@+id/Conte2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/BtnLimpiar"
+        android:layout_alignStart="@id/Conte">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

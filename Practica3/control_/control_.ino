@@ -1,6 +1,6 @@
 
  
-int c = 0;
+String c = "";
  
 void setup() 
 {
@@ -11,7 +11,7 @@ void setup()
  
 void loop()
 {
-    int m=Serial2.read();
+    String m=Serial2.readString();
     if (m!=-1)
     {  
      
@@ -20,7 +20,8 @@ void loop()
         delay(1000);//Delay Para Que No Duplique Informacion
         
         Serial.println(m);
-        Serial2.write(m);
+        //char hola[2];
+        //Serial2.write(hola);
      
         
     }

@@ -68,13 +68,13 @@ public class DispositivosBT extends AppCompatActivity {
             // Obtener la dirección MAC del dispositivo, que son los últimos 17 caracteres en la vista
             String info = ((TextView) v).getText().toString();
             String address = info.substring(info.length() - 17);
-
-            // Realiza un intent para iniciar la siguiente actividad
-            // mientras toma un EXTRA_DEVICE_ADDRESS que es la dirección MAC.
-            //Intent i = new Intent(DispositivosBT.this, MainActivity.class);//<-<- PARTE A MODIFICAR >->->
             Intent i = new Intent(DispositivosBT.this, ControlDeCarro.class);
             i.putExtra(EXTRA_DEVICE_ADDRESS, address);
             startActivity(i);
+            // Realiza un intent para iniciar la siguiente actividad
+            // mientras toma un EXTRA_DEVICE_ADDRESS que es la dirección MAC.
+            //Intent i = new Intent(DispositivosBT.this, MainActivity.class);//<-<- PARTE A MODIFICAR >->->
+
         }
     };
 
