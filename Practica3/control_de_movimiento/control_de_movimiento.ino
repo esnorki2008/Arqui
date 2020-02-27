@@ -1,17 +1,17 @@
 //Motores
-const int controlpin1a =4;
-const int controlpin2a=5;
+const int controlpin1a =8;
+const int controlpin2a=9;
 const int controlpin1b =6;
 const int controlpin2b=7;
 
 //Ultrasonicos
 const int echoAdelante = 24;
 const int trigAdelante = 25;
-const int echoIzquierda = 26;
-const int trigIzquierda = 27;
-const int echoDerecha = 28;
-const int trigDerecha = 29;
-const int minimo = 3;
+const int echoIzquierda = 28;
+const int trigIzquierda = 29;
+const int echoDerecha = 26;
+const int trigDerecha = 27;
+const int minimo = 20;
 int duracion;
 int distancia;
 
@@ -66,6 +66,9 @@ boolean verificarAdelante(){
 
   duracion = pulseIn(echoAdelante, HIGH);
   distancia = duracion / 58.2;
+  /*Serial.print("Distancia adelante ");
+  Serial.print(distancia);
+  Serial.println(" ");*/
   if(distancia <= minimo){
     return false;
   }
@@ -76,9 +79,12 @@ boolean verificarIzquierda(){
   digitalWrite(trigIzquierda, HIGH);
   delay(1);
   digitalWrite(trigIzquierda, LOW);
-
+  
   duracion = pulseIn(echoIzquierda, HIGH);
   distancia = duracion / 58.2;
+  /*Serial.print("Distancia izquierda ");
+  Serial.print(distancia);
+  Serial.println(" ");*/
   if(distancia <= minimo){
     return false;
   }
@@ -92,30 +98,33 @@ boolean verificarDerecha(){
 
   duracion = pulseIn(echoDerecha, HIGH);
   distancia = duracion / 58.2;
+  /*Serial.print("Distancia derecha ");
+  Serial.print(distancia);
+  Serial.println(" ");*/
   if(distancia <= minimo){
     return false;
   }
   return true;
 }
 
-void izquierda(int izquierda){
+void derecha(int derecha){
   digitalWrite(controlpin1a,LOW);
   digitalWrite(controlpin2a,HIGH); 
   digitalWrite(controlpin1b,HIGH);
   digitalWrite(controlpin2b,LOW); 
-  delay(izquierda);
+  delay(derecha);
   digitalWrite(controlpin1a,LOW);
   digitalWrite(controlpin2a,LOW); 
   digitalWrite(controlpin1b,LOW);
   digitalWrite(controlpin2b,LOW);  
 }
   
-void derecha(int derecha){
+void izquierda(int izquierda){
   digitalWrite(controlpin1a,HIGH);
   digitalWrite(controlpin2a,LOW); 
   digitalWrite(controlpin1b,LOW);
   digitalWrite(controlpin2b,HIGH); 
-  delay(derecha);
+  delay(izquierda);
   digitalWrite(controlpin1a,LOW);
   digitalWrite(controlpin2a,LOW); 
   digitalWrite(controlpin1b,LOW);
@@ -148,18 +157,18 @@ void arriba(int arriba){
 
 void comprobarDistancias(){
   if(verificarAdelante()){
-    arriba(10);
+    arriba(100);
     Serial.println("Moviendo el carro hacia adelante");
   } else {
     if(verificarIzquierda()){
-      izquierda(10);
+      izquierda(200);
       Serial.println("Moviendo el carro hacia izquierda");
     } else {
       if(verificarDerecha()){
-        derecha(10);
+        derecha(200);
         Serial.println("Moviendo el carro hacia derecha");
       } else {
-        abajo(10);
+        abajo(100);
         Serial.println("Moviendo el carro hacia atras");
       }
     }
@@ -216,5 +225,6 @@ void loop(){
       comprobarDistancias();
     break;
   }
+  //comprobarDistancias();
   delay(50);
 }
