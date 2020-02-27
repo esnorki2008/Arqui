@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    >
+
+    <TextView
+        android:id="@+id/LblTituloControl"
+        android:layout_width="308dp"
+        android:layout_height="39dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="56dp"
+        android:text="Practica 3-Grupo 16"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/BtnArriba"
+        android:layout_width="126dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/LblTituloControl"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="69dp"
+        android:text="Arriba"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/BtnAbajo"
+        android:layout_width="126dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/BtnIzquierda"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="51dp"
+        android:text="Abajo"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/BtnIzquierda"
+        android:layout_width="126dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/BtnArriba"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="62dp"
+        android:text="Izquierda"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/BtnDerecha"
+        android:layout_width="126dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/BtnArriba"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="263dp"
+        android:layout_marginTop="62dp"
+        android:text="Derecha"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/BtnLimpiar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/BtnBarrer"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="38dp"
+        android:text="Limpiar" />
+
+    <TextView
+        android:id="@+id/LblRutas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/BtnBarrer"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="82dp"
+        android:layout_marginTop="-2dp"
+        android:text="Rutas"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/BtnRecorrer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/BtnLimpiar"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="163dp"
+        android:layout_marginTop="47dp"
+        android:text="Recorrer" />
+
+    <Button
+        android:id="@+id/BtnBarrer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/BtnAbajo"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="158dp"
+        android:layout_marginTop="32dp"
+        android:text="Barrer" />
+
+    <Button
+        android:id="@+id/BtnGuardar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/BtnBarrer"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="245dp"
+        android:layout_marginTop="39dp"
+        android:text="Guardar" />
+
+</RelativeLayout>
