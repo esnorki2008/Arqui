@@ -18,6 +18,7 @@ public class DispositivosBT extends AppCompatActivity {
     private static final String TAG = "DispositivosBT";
     ListView idlista;
     public static String EXTRA_DEVICE_ADDRESS = "device_address";
+    public static String Direcc = null;
     private BluetoothAdapter mBtAdapter;
     private ArrayAdapter mPairedDevicesArrayAdapter;
 
@@ -69,6 +70,7 @@ public class DispositivosBT extends AppCompatActivity {
             String info = ((TextView) v).getText().toString();
             String address = info.substring(info.length() - 17);
             Intent i = new Intent(DispositivosBT.this, ControlDeCarro.class);
+            Direcc=address;
             i.putExtra(EXTRA_DEVICE_ADDRESS, address);
             startActivity(i);
             // Realiza un intent para iniciar la siguiente actividad

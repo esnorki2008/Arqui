@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:text="Recorrer Ruta Guardada"
+        android:text="Recorrer Ruta Guardada \n Limpiar Ruta Guardada"
         android:textSize="36sp" />
 
     <Button
@@ -79,6 +79,7 @@
             android:orientation="vertical">
 
             <ListView
+                android:id="@+id/LstContenido"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>

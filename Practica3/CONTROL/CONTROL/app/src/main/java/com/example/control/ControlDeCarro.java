@@ -25,6 +25,8 @@ public class ControlDeCarro extends AppCompatActivity {
     Button BtnArriba, BtnAbajo,BtnIzquierda,BtnDerecha,BtnLimpiar,BtnBarrer,BtnGuardar,BtnRecorrer;
     TextView Nose;
     //-------------------------------------------
+    public static String EXTRA_DEVICE_ADDRESS = "device_address";
+    public static String EXTRA_DEVICE_ADDRESS1 = null;
     Handler bluetoothIn;
     final int handlerState = 0;
     private BluetoothAdapter btAdapter = null;
@@ -35,6 +37,7 @@ public class ControlDeCarro extends AppCompatActivity {
     private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     // String para la direccion MAC
     private static String address = null;
+    public static String direcc = null;
 //-------------------------------------------
 
     @Override
@@ -106,30 +109,30 @@ public class ControlDeCarro extends AppCompatActivity {
         BtnLimpiar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                String info = ((TextView) v).getText().toString();
-                String address = info.substring(info.length() - 17);
+                //String address = info.substring(info.length() - 17);
+
                 Intent i = new Intent(ControlDeCarro.this, Guardar.class);
-                i.putExtra(ControlDeCarro.address, address);
+                i.putExtra(EXTRA_DEVICE_ADDRESS, address);
                 startActivity(i);
             }
         });
         BtnGuardar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                String info = ((TextView) v).getText().toString();
-                String address = info.substring(info.length() - 17);
+                //String address = info.substring(info.length() - 17);
+
                 Intent i = new Intent(ControlDeCarro.this, Recorrer.class);
-                i.putExtra(ControlDeCarro.address, address);
+                i.putExtra(EXTRA_DEVICE_ADDRESS, address);
                 startActivity(i);
             }
         });
         BtnRecorrer.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                String info = ((TextView) v).getText().toString();
-                String address = info.substring(info.length() - 17);
+                //String address = info.substring(info.length() - 17);
+
                 Intent i = new Intent(ControlDeCarro.this, Guardar.class);
-                i.putExtra(ControlDeCarro.address, address);
+                i.putExtra(EXTRA_DEVICE_ADDRESS, address);
                 startActivity(i);
             }
         });
@@ -169,7 +172,10 @@ public class ControlDeCarro extends AppCompatActivity {
         Intent intent = getIntent();
         //Consigue la direccion MAC desde DeviceListActivity via EXTRA
         address = intent.getStringExtra(DispositivosBT.EXTRA_DEVICE_ADDRESS);//<-<- PARTE A MODIFICAR >->->
+
+        direcc=address;
         //Setea la direccion MAC
+        Log.i("STR", address);
         BluetoothDevice device = btAdapter.getRemoteDevice(address);
 
         try
@@ -242,7 +248,7 @@ public class ControlDeCarro extends AppCompatActivity {
             int z;
             // Se mantiene en modo escucha para determinar el ingreso de datos
 
-                while (true) {
+                /*while (true) {
                     try {
                         bytes = mmInStream.read(buffer);            //read bytes from input buffer
                         String readMessage = new String(buffer, 0, bytes);
@@ -259,7 +265,7 @@ public class ControlDeCarro extends AppCompatActivity {
                     } catch (IOException e) {
                         break;
                     }
-                }
+                }*/
 
 
 

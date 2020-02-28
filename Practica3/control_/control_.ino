@@ -33,8 +33,7 @@ void EnviarRutaGuardada(){
         Serial2.print(NuevaRuta.Nombre[x]);
         Serial.print(NuevaRuta.Nombre[x]);
       }
-      Serial2.print("{");
-      Serial.print("{");
+      
       for(int x=0;x<10;x++){
         Directiva Paso=NuevaRuta.Pasos[x];
         if(x!=0)
