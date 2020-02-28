@@ -51,7 +51,7 @@ void setup() {
   //Control de UltraSonico
   peq = 5;
   med = 4;
-  gra = 3;
+  gra = 2;
   trigger = 24;
   eco = 22;
 
@@ -262,22 +262,22 @@ void ComprobarColor() {
   Frecuencia = pulseIn(Out, LOW);
   cAzul = map(Frecuencia, 2250, 650, 0, 255);
 
-  /*Serial.print(cRojo);
+  Serial.print(cRojo);
   Serial.print("  ");
   Serial.print(cVerde);
   Serial.print("  ");
   Serial.print(cAzul);
-  Serial.println("   ");*/
+  Serial.println("   ");
 
   //Rojo = 1; Verde = 2; Azul = 3
-  if (cRojo < 0 && cVerde < 0 && cAzul < 60) {
+  if (cRojo < 190 && cVerde < 150 && cAzul < 200) {
     //Falso Azul
   } else {
-    if (cAzul > cRojo && cAzul > cVerde && cRojo < 100 && cAzul >= 60 ) {
+    if (cAzul > cVerde && cAzul > cRojo && cAzul > 200) {
       //Azul
       color = 3;
       Serial.println("Azul");
-    } else if ((cRojo > 0 && cVerde < 0) || (cRojo > cVerde && cRojo > cAzul) || (cRojo >= 0 && cAzul >= 0 && cVerde < 0)) {
+    } else if (cRojo > cVerde && cRojo > cAzul && cRojo > 200) {
       //Rojo
       color = 1;
       Serial.println("Rojo");
