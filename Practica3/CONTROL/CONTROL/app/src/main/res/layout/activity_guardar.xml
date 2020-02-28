@@ -20,8 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/LblTitulo"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="457dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="425dp"
         android:text="Recorrer"
         android:textSize="24sp" />
 
@@ -47,7 +47,7 @@
     </ScrollView>
 
     <TextView
-        android:id="@+id/LblGuardado"
+        android:id="@+id/LblRutas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/LblTitulo"
@@ -61,8 +61,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/LblTitulo"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="234dp"
-        android:layout_marginTop="459dp"
+        android:layout_marginStart="232dp"
+        android:layout_marginTop="419dp"
         android:text="Limpiar"
         android:textSize="24sp" />
 
@@ -81,8 +81,15 @@
             <ListView
                 android:id="@+id/LstContenido"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="148dp" />
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/BtnActualizar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/LblRutas"
+        android:text="Actualizar" />
 
 </RelativeLayout>

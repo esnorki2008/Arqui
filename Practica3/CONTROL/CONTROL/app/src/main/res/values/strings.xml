@@ -6,4 +6,7 @@
     <string name="desconectar">Desconectar</string>
     <string name="dato">Dato:</string>
     <string name="dispositivos_conectados">DISPOSITIVOS CONECTADOS</string>
+    <string name="title_activity_practica">Practica</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
 </resources>

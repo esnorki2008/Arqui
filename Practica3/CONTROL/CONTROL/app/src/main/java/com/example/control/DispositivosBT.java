@@ -3,6 +3,7 @@ package com.example.control;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ListView;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -17,6 +18,7 @@ import java.util.Set;
 public class DispositivosBT extends AppCompatActivity {
     private static final String TAG = "DispositivosBT";
     ListView idlista;
+    Button BtnGuardar,BtnManual;
     public static String EXTRA_DEVICE_ADDRESS = "device_address";
     public static String Direcc = null;
     private BluetoothAdapter mBtAdapter;
@@ -26,6 +28,28 @@ public class DispositivosBT extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dispositivos_bt);
+        BtnGuardar=(Button) findViewById(R.id.BtnGuardar);
+        BtnManual=(Button) findViewById(R.id.BtnManual);
+
+
+
+        BtnGuardar.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                Intent i = new Intent(DispositivosBT.this, Guardar.class);
+                i.putExtra(EXTRA_DEVICE_ADDRESS, Direcc);
+                startActivity(i);
+            }
+        });
+        BtnManual.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                Intent i = new Intent(DispositivosBT.this, ControlDeCarro.class);
+                i.putExtra(EXTRA_DEVICE_ADDRESS, Direcc);
+                startActivity(i);
+            }
+        });
+
     }
 
     @Override
@@ -69,10 +93,18 @@ public class DispositivosBT extends AppCompatActivity {
             // Obtener la dirección MAC del dispositivo, que son los últimos 17 caracteres en la vista
             String info = ((TextView) v).getText().toString();
             String address = info.substring(info.length() - 17);
+            Direcc=address;
+            /*
+            Intent i = new Intent(DispositivosBT.this, Guardar.class);
+            i.putExtra(EXTRA_DEVICE_ADDRESS, address);
+            startActivity(i);
+            */
+/*
             Intent i = new Intent(DispositivosBT.this, ControlDeCarro.class);
             Direcc=address;
             i.putExtra(EXTRA_DEVICE_ADDRESS, address);
-            startActivity(i);
+            startActivity(i);*/
+
             // Realiza un intent para iniciar la siguiente actividad
             // mientras toma un EXTRA_DEVICE_ADDRESS que es la dirección MAC.
             //Intent i = new Intent(DispositivosBT.this, MainActivity.class);//<-<- PARTE A MODIFICAR >->->

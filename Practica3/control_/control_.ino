@@ -36,7 +36,7 @@ void EnviarRutaGuardada(){
       
       for(int x=0;x<10;x++){
         Directiva Paso=NuevaRuta.Pasos[x];
-        if(x!=0)
+        
         Serial2.print(",");
         Serial2.print(Paso.Direccion);
         Serial2.print(",");
