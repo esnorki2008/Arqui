@@ -8,6 +8,7 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -233,24 +234,50 @@ public class ControlDeCarro extends AppCompatActivity {
             mmInStream = tmpIn;
             mmOutStream = tmpOut;
         }
-
+        String Lectura="";
         public void run()
         {
             byte[] buffer = new byte[256];
             int bytes;
-
+            int z;
             // Se mantiene en modo escucha para determinar el ingreso de datos
-            while (true) {
-                try {
-                    bytes = mmInStream.read(buffer);
-                    String readMessage = new String(buffer, 0, bytes);
-                    // Envia los datos obtenidos hacia el evento via handler
-                    bluetoothIn.obtainMessage(handlerState, bytes, -1, readMessage).sendToTarget();
-                } catch (IOException e) {
-                    break;
+
+                while (true) {
+                    try {
+                        bytes = mmInStream.read(buffer);            //read bytes from input buffer
+                        String readMessage = new String(buffer, 0, bytes);
+                        // Send the obtained bytes to the UI Activity via handler
+
+                        Lectura=Lectura+readMessage;
+                        if(readMessage.contains("$")){
+
+                            Log.i("STR", Lectura);
+                            Lectura="";
+
+                        }
+                        //if(read)
+                    } catch (IOException e) {
+                        break;
+                    }
                 }
+
+
+
+
+                    /*bytes = mmInStream.read(buffer);
+                    z= mmInStream.read(buffer);
+                    String readMessage = new String(buffer, 0, bytes);
+                    Lectura=Lectura+readMessage;
+                    Log.d("SalidaByte", bytes+"******");
+                    Log.d("SalidaRead", readMessage+"******");
+                    if(readMessage.equals("$")){
+                        Log.d("myTag", Lectura);
+                        Lectura="";
+                    }
+                    // Envia los datos obtenidos hacia el evento via handler
+                    bluetoothIn.obtainMessage(handlerState, bytes, -1, readMessage).sendToTarget();*/
             }
-        }
+
         //Envio de trama
         public void write(String input)
         {
@@ -264,5 +291,6 @@ public class ControlDeCarro extends AppCompatActivity {
                 finish();
             }
         }
+
     }
 }
