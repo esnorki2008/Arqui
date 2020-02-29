@@ -125,7 +125,7 @@ void setup(){
   
   
   
-EscribirEEprom();
+//EscribirEEprom();
 }
 
 boolean verificarAdelante(){
@@ -508,7 +508,10 @@ void loop(){
   if(digitalRead(boton) == 1){
     presionado = !presionado;
   }
-  if(!presionado){
+
+   
+  
+  if(!presionado ){
     switch(comprobarColor()){
       //Color negro, Retroceso
       case 0:
