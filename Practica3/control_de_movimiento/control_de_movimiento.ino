@@ -26,9 +26,9 @@ int cRed, cGreen, cBlue;
 
 //Barrido
 const int barredora = 53;
-
+boolean BarredoraActivada=false;
 //Boton
-const int boton = 8;
+const int boton = 37;
 boolean presionado;
 
 //EEprom
@@ -93,7 +93,7 @@ void setup(){
   //Barredora
   pinMode(barredora, OUTPUT);
   digitalWrite(barredora, HIGH);
-
+ 
   //Boton
   pinMode(boton, INPUT);
   presionado = false;
@@ -361,6 +361,7 @@ void ComprobarEEprom(){//Para Ver Si Los Datos Se Ingresaron Bien
 void MovimientoAutomatico(int Direccion,int Tiempo){
   switch(Direccion){
     case 0:
+      Serial.print("Arriba Ruta   ");
       arriba(Tiempo);
       break;
     case 1:
@@ -373,6 +374,7 @@ void MovimientoAutomatico(int Direccion,int Tiempo){
       derecha(Tiempo);
       break;  
   }
+  Serial.println(Tiempo);
 }
 void OperacionesBluetooth(){
   bool Continuar=true;
@@ -380,7 +382,7 @@ void OperacionesBluetooth(){
         char m=Serial2.read();
         if(m=='z'){//CrearNuevaRuta
           int Contador=0;
-          
+          Serial.println("Creando Nueva Ruta");
           while(Continuar){   
             //Serial.println("loop");          
             if(Serial2.available()){
@@ -392,10 +394,10 @@ void OperacionesBluetooth(){
                   EEprom.Rutas[ContaEEprom].Nombre[2]=Entrada[2];
                   EEprom.Rutas[ContaEEprom].Nombre[3]=Entrada[3];
                   EEprom.Rutas[ContaEEprom].Nombre[4]=Entrada[4];
-                  Serial.print(Entrada);
+                  //Serial.print(Entrada);
                   
                 }else{//Contenido Ruta
-                  Serial.print(",");
+                  //Serial.print(",");
                   //Serial.print(Entrada);
                   
                   if(Contador%2!=0){//Es Una Direccion   
@@ -427,24 +429,31 @@ void OperacionesBluetooth(){
                 Continuar=false;
             }
           }
-          Serial.println();
+          //Serial.println();
         }else
         if(m=='n'){//Arriba
+          Serial.println("Moviendo Arriba Blue");
           arriba(1000);
         }else
         if(m=='s'){//Abajo
+          Serial.println("Moviendo Abajo Blue");
           abajo(1000);
         }else
         if(m=='e'){//Izquieda
+          Serial.println("Moviendo Izquierda Blue");
           izquierda(1000);
         }else
         if(m=='o'){//derecha
+          Serial.println("Moviendo Derecha Blue");
           derecha(1000);
         }else
         if(m=='t'){//limpiar
-          digitalWrite(barredora, LOW);
-          delay(10000);
-          digitalWrite(barredora, HIGH);
+          Serial.println("Activando Barrer Blue");
+          if(BarredoraActivada)
+            BarredoraActivada=false;
+          else
+            BarredoraActivada=true;
+          
         }else
         if(m=='b'){//BorrarStruct
           while(Continuar){
@@ -494,23 +503,20 @@ void OperacionesBluetooth(){
           
         }else{
         //delay(1000);//Delay Para Que No Duplique Informacion
-        Serial.println("Descibicudi");//Bluetooth Desconocido
+        Serial.println("Desconocido");//Bluetooth Desconocido
         Serial.println(m);
-        /*char hola[2];
-        hola[0]='n';
-        hola[1]='o';
-        */
+        
         }
   
 }
   
 void loop(){
-  if(digitalRead(boton) == 1){
-    presionado = !presionado;
-  }
-
-   
-  
+  //if(digitalRead(boton) == 1){
+  //  presionado = !presionado;
+  //}
+   // presionado=digitalRead(boton);
+  // Serial.println(digitalRead(boton));
+  //presionado=0;
   if(!presionado ){
     switch(comprobarColor()){
       //Color negro, Retroceso
@@ -521,12 +527,17 @@ void loop(){
       //Color azul, Manual
       case 1:
         //Codigo de control manual
+        if(BarredoraActivada)
+          digitalWrite(barredora, LOW);
+        else
+          digitalWrite(barredora, HIGH);
+        
         if (Serial2.available())
         {  
         OperacionesBluetooth();        
         }
         
-        digitalWrite(barredora, HIGH);
+       
       break;
       //Color rojo, barrer
       case 2:
