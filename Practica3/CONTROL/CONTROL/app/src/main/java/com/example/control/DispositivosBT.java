@@ -18,7 +18,7 @@ import java.util.Set;
 public class DispositivosBT extends AppCompatActivity {
     private static final String TAG = "DispositivosBT";
     ListView idlista;
-    Button BtnGuardar,BtnManual;
+    Button BtnGuardar,BtnManual,BtnRutas;
     public static String EXTRA_DEVICE_ADDRESS = "device_address";
     public static String Direcc = null;
     private BluetoothAdapter mBtAdapter;
@@ -30,9 +30,16 @@ public class DispositivosBT extends AppCompatActivity {
         setContentView(R.layout.activity_dispositivos_bt);
         BtnGuardar=(Button) findViewById(R.id.BtnGuardar);
         BtnManual=(Button) findViewById(R.id.BtnManual);
+        BtnRutas=(Button) findViewById(R.id.BtnRutas);
 
-
-
+        BtnRutas.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                Intent i = new Intent(DispositivosBT.this, Recorrer.class);
+                i.putExtra(EXTRA_DEVICE_ADDRESS, Direcc);
+                startActivity(i);
+            }
+        });
         BtnGuardar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {

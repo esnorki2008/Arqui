@@ -10,20 +10,28 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class Recorrer extends AppCompatActivity {
 
     //1)
-    Button BtnArriba, BtnAbajo,BtnIzquierda,BtnDerecha,BtnLimpiar,BtnBarrer,BtnGuardar,BtnRecorrer;
-    TextView Nose;
+    Button BtnGuardar,BtnAgregar;
+    Spinner Spi1,Spi2;
+    ListView LstElementos;
+    TextView TxtIngreso;
+    ArrayAdapter Master;
+    ArrayList MasterDetalle;
     //-------------------------------------------
     Handler bluetoothIn;
     final int handlerState = 0;
@@ -35,22 +43,42 @@ public class Recorrer extends AppCompatActivity {
     private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     // String para la direccion MAC
     private static String address = null;
+    int Contador=0;
+    byte[] NuevaRuta = new byte[20];
 //-------------------------------------------
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_control_de_carro);
+        setContentView(R.layout.activity_recorrer);
         //2)
 
-        BtnArriba = (Button) findViewById(R.id.BtnArriba);
-        BtnIzquierda = (Button) findViewById(R.id.BtnIzquierda);
-        BtnDerecha = (Button) findViewById(R.id.BtnDerecha);
-        BtnAbajo = (Button) findViewById(R.id.BtnAbajo);
-        BtnBarrer = (Button) findViewById(R.id.BtnBarrer);
-        BtnLimpiar = (Button) findViewById(R.id.BtnLimpiar);
+
         BtnGuardar = (Button) findViewById(R.id.BtnGuardar);
-        BtnRecorrer = (Button) findViewById(R.id.BtnRecorrer);
+        BtnAgregar = (Button) findViewById(R.id.BtnAgregar);
+        LstElementos=(ListView)findViewById(R.id.LstContenido);
+        TxtIngreso=(TextView)findViewById(R.id.TxtIngreso);
+        Spi1=(Spinner)findViewById(R.id.Spi1);
+        Spi2=(Spinner)findViewById(R.id.Spi2);
+        MasterDetalle=new ArrayList();
+        ArrayList Movimientos= new ArrayList();
+        Movimientos.add("arriba");
+        Movimientos.add("abajo");
+        Movimientos.add("izquierda");
+        Movimientos.add("derecha");
+
+
+        ArrayList Tiempos= new ArrayList();
+        for(int i=1;i<21;i++){
+            Tiempos.add(i+"");
+        }
+        ArrayAdapter Adapta1 = new ArrayAdapter(this,android.R.layout.simple_list_item_1,Movimientos);
+        ArrayAdapter Adapta2 = new ArrayAdapter(this,android.R.layout.simple_list_item_1,Tiempos);
+        Master= new ArrayAdapter(this,android.R.layout.simple_list_item_1,MasterDetalle);
+
+        LstElementos.setAdapter(Master);
+        Spi1.setAdapter(Adapta1);
+        Spi2.setAdapter(Adapta2);
 
         bluetoothIn = new Handler() {
             public void handleMessage(android.os.Message msg) {
@@ -71,79 +99,156 @@ public class Recorrer extends AppCompatActivity {
 
         btAdapter = BluetoothAdapter.getDefaultAdapter(); // get Bluetooth adapter
         VerificarEstadoBT();
-        BtnArriba.setOnClickListener(new View.OnClickListener() {
+        BtnAgregar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                InfoEnvia("arriba");
+                if(Contador<=18){
+                String Direccion=Spi1.getSelectedItem().toString();
+                String Tiempo=Spi2.getSelectedItem().toString();
+                MasterDetalle.add("Direccion: "+Direccion+", Tiempo: "+Tiempo);
+                Master.notifyDataSetChanged();
+                byte Direc=0;
+                switch (Direccion.toLowerCase().trim()){
+                    case "arriba":
+                        Direc=0;
+                        break;
+                    case "abajo":
+                        Direc=1;
+                        break;
+                    case "izquierda":
+                        Direc=2;
+                        break;
+                    case "derecha":
+                        Direc=3;
+                        break;
+                }
+
+
+                    NuevaRuta[Contador]=Direc;
+                    NuevaRuta[Contador+1]=Byte.parseByte(Tiempo);
+                    Contador=Contador+2;
+                }
             }
         });
 
-        BtnDerecha.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v)
-            {
-                InfoEnvia("derecha");
-            }
-        });
-        BtnIzquierda.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v)
-            {
-                InfoEnvia("izquierda");
-            }
-        });
-        BtnAbajo.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v)
-            {
-                InfoEnvia("abajo");
-            }
-        });
-
-        BtnBarrer.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v)
-            {
-                InfoEnvia("barrer");
-            }
-        });
-        BtnLimpiar.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v)
-            {
-                String info = ((TextView) v).getText().toString();
-                //String address = info.substring(info.length() - 17);
-                Intent i = new Intent(Recorrer.this, Guardar.class);
-                i.putExtra(Recorrer.address, address);
-                startActivity(i);
-            }
-        });
         BtnGuardar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                String info = ((TextView) v).getText().toString();
-                //String address = info.substring(info.length() - 17);
-                Intent i = new Intent(Recorrer.this, Recorrer.class);
-                i.putExtra(Recorrer.address, address);
-                startActivity(i);
-            }
-        });
-        BtnRecorrer.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v)
-            {
-                String info = ((TextView) v).getText().toString();
-                //String address = info.substring(info.length() - 17);
-                Intent i = new Intent(Recorrer.this, Guardar.class);
-                i.putExtra(Recorrer.address, address);
-                startActivity(i);
-            }
-        });
-        /*IdDesconectar.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (btSocket!=null)
-                {
-                    try {btSocket.close();}
-                    catch (IOException e)
-                    { Toast.makeText(getBaseContext(), "Error", Toast.LENGTH_SHORT).show();;}
+                if(MasterDetalle.size()==0) {
+                    Toast.makeText(getBaseContext(), "No Se Ha Agregado Nada Nuevo A La Ruta", Toast.LENGTH_LONG).show();
+                    return;
                 }
-                finish();
+                InfoEnvia("i");
+                int AntiBucle=0;
+                while(Titulo==null){
+                    AntiBucle++;
+                    if(AntiBucle>10){
+                        break;
+                    }
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                }
+
+
+                int Index=2;
+                for(int i=0;i<3;i++){
+                    if(Titulo.get(i).toString().toLowerCase().trim().equals("rutalibre")){
+
+                        Index=i;
+                        break;
+                    }
+                }
+                ArrayList Tempo = new ArrayList();
+                for(int i=0;i<3;i++){
+                    if(i!=Index){
+                        Tempo.add(Titulo.get(i).toString());
+                    }else{
+                        Tempo.add(TxtIngreso.getText());
+                    }
+                }
+                Titulo=Tempo;
+                for(int j=0;j<20;j++){
+
+                        Matriz[Index][j]=NuevaRuta[j]+"";
+                        NuevaRuta[j]=0;
+                }
+                TxtIngreso.setText("");
+                MasterDetalle.clear();
+                Master.notifyDataSetChanged();
+                EnviarTodo();
             }
-        });*/
+        });
+    }
+
+    private void EnviarTodo(){
+        for(int i=0;i<3;i++){
+
+            InfoEnvia("z");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            String Mando=Titulo.get(i).toString();
+            if(Mando.toLowerCase().trim().equals("rutalibre")){Mando="nullp";}
+            if(Mando.length()>5){Mando=Mando.substring(0,5);}
+
+            InfoEnvia(Mando);
+            try {
+                Thread.sleep(1000);
+                InfoEnvia(",");
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            for(int j=0;j<20;j++){//Enviar Info
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                InfoEnvia(Matriz[i][j]);
+                InfoEnvia(",");
+            }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+    ArrayList MegaAuxiliar;
+    ArrayList Titulo;
+    String Matriz[][] = new String[3][20];
+    private void CaraInfo(String Dita){
+
+        Titulo= new ArrayList();
+        MegaAuxiliar=new ArrayList();
+
+        String[] Ru=Dita.split("\\}");
+        for(int i=0;i<3;i++){
+
+
+            String[] Contend=Ru[i].split(",");
+            //
+            if(Contend[0].equals("nullp")){
+                Titulo.add("rutalibre");
+            }else{
+                Titulo.add(Contend[0]);
+            }
+
+            for(int j=1;j<21;j++){
+                Matriz[i][j-1]=(Contend[j]);
+
+            }
+
+        }
     }
     void InfoEnvia(String id){
         if (address == null) {
@@ -250,8 +355,9 @@ public class Recorrer extends AppCompatActivity {
 
                     Lectura=Lectura+readMessage;
                     if(readMessage.contains("$")){
+                        CaraInfo(Lectura);
+                        //TxtContenido.setText(ValorContenido);
 
-                        Log.i("STR", Lectura);
                         Lectura="";
 
                     }

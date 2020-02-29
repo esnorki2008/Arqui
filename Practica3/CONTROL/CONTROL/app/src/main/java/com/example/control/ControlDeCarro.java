@@ -75,33 +75,33 @@ public class ControlDeCarro extends AppCompatActivity {
         BtnArriba.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                InfoEnvia("arriba");
+                InfoEnvia("n");
             }
         });
 
         BtnDerecha.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                InfoEnvia("derecha");
+                InfoEnvia("o");
             }
         });
         BtnIzquierda.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                InfoEnvia("izquierda");
+                InfoEnvia("e");
             }
         });
         BtnAbajo.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                InfoEnvia("abajo");
+                InfoEnvia("s");
             }
         });
 
         BtnBarrer.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                InfoEnvia("barrer");
+                InfoEnvia("t");
             }
         });
 

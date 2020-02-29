@@ -7,11 +7,19 @@
     tools:context=".Guardar">
 
     <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Placa"
+        android:text="Ruta Seleccionada"
+        android:textSize="24sp" />
+
+    <TextView
         android:id="@+id/Placa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:text="Recorrer Ruta Guardada \n Limpiar Ruta Guardada"
+        android:text="Recorrer/Limpiar Rutas "
         android:textSize="36sp" />
 
     <Button
@@ -20,8 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/Placa"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="425dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="420dp"
         android:text="Recorrer"
         android:textSize="24sp" />
 
@@ -52,7 +60,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/Placa"
         android:layout_marginTop="43dp"
-        android:text="Ruta Seleccionada:"
         android:textSize="24sp" />
 
     <Button
@@ -90,6 +97,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/LblRutas"
-        android:text="Actualizar" />
+        android:text="Obtener Rutas" />
 
 </RelativeLayout>

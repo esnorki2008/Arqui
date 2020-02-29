@@ -17,6 +17,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -45,15 +47,16 @@ public class Guardar extends AppCompatActivity {
 
     ArrayList Titulo;
     ArrayList Arr;
+    ArrayList MegaAuxiliar;
     String ValorContenido="";
-    byte Matriz[][] = new byte[2][10];
+    String Matriz[][] = new String[3][20];
     private  ArrayAdapter Adapt,AdaptSuperior;
 //-------------------------------------------
 
     private void CaraInfo(String Dita){
         Arr.clear();
         Titulo.clear();
-
+        MegaAuxiliar=new ArrayList();
 
         String[] Ru=Dita.split("\\}");
         for(int i=0;i<3;i++){
@@ -62,16 +65,21 @@ public class Guardar extends AppCompatActivity {
             String[] Contend=Ru[i].split(",");
             //
             if(Contend[0].equals("nullp")){
-                Titulo.add("Ruta Libre");
+                Titulo.add("RutaLibre");
             }else{
                 Titulo.add(Contend[0]);
             }
             String Value="";
             for(int j=1;j<21;j++){
+                Matriz[i][j-1]=(Contend[j]);
+                if(j%2==0){//Llenar Array Con Valores
 
-                if(j%2==0){
                     if(!Contend[j].equals("0")) {
                         Value = Value + "Tiempo: " + Contend[j];
+                        Arr.add(Value);
+                        MegaAuxiliar.add(Value);
+                    }else{
+                        MegaAuxiliar.add(Value);
                         Arr.add(Value);
                     }
                     Value="";
@@ -129,22 +137,28 @@ public class Guardar extends AppCompatActivity {
         BtnLimpiar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                InfoEnvia("info");
+               Borrar();
             }
         });
         BtnActualizar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
 
-                InfoEnvia("info");
-               Adapt.notifyDataSetChanged();
+                Seleccionado.setText("");
+                InfoEnvia("i");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Adapt.notifyDataSetChanged();
                AdaptSuperior.notifyDataSetChanged();
             }
         });
         BtnRecorrer.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                InfoEnvia("info");
+               Recorrer();
             }
         });
 
@@ -156,38 +170,77 @@ public class Guardar extends AppCompatActivity {
 
     private AdapterView.OnItemClickListener mDeviceClickListener = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView av, View v, int arg2, long arg3) {
-
-            // Obtener la dirección MAC del dispositivo, que son los últimos 17 caracteres en la vista
             String info = ((TextView) v).getText()+"";
             Seleccionado.setText(info);
             //Seleccionado.setText(info);
-            ArrayList Aux = new ArrayList();
+            Arr.clear();
             for(int i=0;i<3;i++){
                 if(info.toLowerCase().trim().equals(Titulo.get(i).toString().toLowerCase().trim())){
-                    for(int j=0;j<Arr.size();j++){
-
-                        if(j-i*10<0){
-                            Aux.add(Arr.get(j));
+                    Log.d("OPARS","OCURRIORIOI      "+Arr.size()+"      "+i );
+                    for(int j=0;j<MegaAuxiliar.size();j++){
+                        if(j/10==i){
+                            Arr.add(MegaAuxiliar.get(j));
                         }
-
                     }
 
 
                 }
+            }
 
-            }
-            Arr.clear();
-            for(int i=0;i<10;i++){
-                Arr.add(Aux.get(i));
-            }
+
             Adapt.notifyDataSetChanged();
-
-
-
         }
     };
 
+    void Borrar(){//Eliminar Algún Struct
+        String info = Seleccionado.getText().toString();
+        if(info.toLowerCase().trim().equals("rutalibre")){
+            Toast.makeText(getBaseContext(), "Una Ruta Libre No Se Puede Recorrer", Toast.LENGTH_LONG).show();
+            return;
+        }
+        //Seleccionado.setText(info);
+        ArrayList Aux = new ArrayList();
+        for(int i=0;i<3;i++){
+            if(info.toLowerCase().trim().equals(Titulo.get(i).toString().toLowerCase().trim())){
+                InfoEnvia("b");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                InfoEnvia(i+"");
+                return;
+            }
+        }
+    }
+    void Recorrer(){//Recorrer Arreglos
+        String info = Seleccionado.getText().toString();
+        if(info.toLowerCase().trim().equals("rutalibre")){
+            Toast.makeText(getBaseContext(), "Una Ruta Libre No Se Puede Limpiar", Toast.LENGTH_LONG).show();
+            return;
+        }
 
+        for(int i=0;i<3;i++){
+            if(info.toLowerCase().trim().equals(Titulo.get(i).toString().toLowerCase().trim())){
+                InfoEnvia("r");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                for(int j=0;j<20;j++){//Enviar Info
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    InfoEnvia(Matriz[i][j]);
+                    InfoEnvia(",");
+                }
+                return;
+            }
+        }
+    }
 
     void InfoEnvia(String id){
         if (address == null) {
@@ -197,6 +250,8 @@ public class Guardar extends AppCompatActivity {
 
             System.out.println("Enviando "+id);
             MyConexionBT.write(id);
+
+
         }
     }
 
