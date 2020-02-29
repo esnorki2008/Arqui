@@ -96,6 +96,7 @@ void setup(){
  
   //Boton
   pinMode(boton, INPUT);
+  digitalWrite(boton,HIGH); //Desactivar
   presionado = false;
 
   Serial.begin(9600);
@@ -511,11 +512,11 @@ void OperacionesBluetooth(){
 }
   
 void loop(){
-  //if(digitalRead(boton) == 1){
-  //  presionado = !presionado;
-  //}
+  if(digitalRead(boton) == 0){
+    presionado = !presionado;
+  }
    // presionado=digitalRead(boton);
-  // Serial.println(digitalRead(boton));
+   //Serial.println(digitalRead(boton));
   //presionado=0;
   if(!presionado ){
     switch(comprobarColor()){
@@ -553,6 +554,10 @@ void loop(){
     }
   } else {
     //Modo Manual
+    if (Serial2.available())
+     {  
+        OperacionesBluetooth();        
+     }
   }
   delay(50);
 }
