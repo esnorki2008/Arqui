@@ -1,9 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Placa"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentStart="true"
     tools:context=".Recorrer">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <EditText
+        android:id="@+id/TxtIngreso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/LblNombre"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/BtnAgregar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Conte"
+        android:layout_marginTop="28dp"
+        android:text="Agregar A La Ruta"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/BtnGuardar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Conte"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="19dp"
+        android:text="Guardar"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/LblListaMovimientos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Spi1"
+        android:layout_alignParentStart="true"
+        android:text="Lista De Movimientos" />
+
+    <TextView
+        android:id="@+id/LblAgregarMov"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/TxtIngreso"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="17dp"
+        android:enabled="false"
+        android:text="AgregarMovimiento/Segundos"
+        android:textColor="#000000" />
+
+    <Spinner
+        android:id="@+id/Spi1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/LblAgregarMov"
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:id="@+id/Spi2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/LblAgregarMov"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="223dp"
+        android:layout_marginTop="-4dp" />
+
+    <TextView
+        android:id="@+id/LblNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/LblTitulo"
+        android:layout_alignParentStart="true"
+        android:text="Nombre"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/LblTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="115dp"
+        android:text="Guardar Ruta"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        tools:layout_editor_absoluteX="144dp"
+        tools:layout_editor_absoluteY="41dp" />
+
+    <ScrollView
+        android:id="@+id/Conte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/LblListaMovimientos">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <ListView
+                android:id="@+id/LstContenido"
+                android:layout_width="wrap_content"
+                android:layout_height="162dp" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

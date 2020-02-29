@@ -22,11 +22,10 @@ import java.util.UUID;
 public class ControlDeCarro extends AppCompatActivity {
 
     //1)
-    Button BtnArriba, BtnAbajo,BtnIzquierda,BtnDerecha,BtnLimpiar,BtnBarrer,BtnGuardar,BtnRecorrer;
+    Button BtnArriba, BtnAbajo,BtnIzquierda,BtnDerecha,BtnBarrer;
     TextView Nose;
     //-------------------------------------------
     public static String EXTRA_DEVICE_ADDRESS = "device_address";
-    public static String EXTRA_DEVICE_ADDRESS1 = null;
     Handler bluetoothIn;
     final int handlerState = 0;
     private BluetoothAdapter btAdapter = null;
@@ -51,9 +50,8 @@ public class ControlDeCarro extends AppCompatActivity {
         BtnDerecha = (Button) findViewById(R.id.BtnDerecha);
         BtnAbajo = (Button) findViewById(R.id.BtnAbajo);
         BtnBarrer = (Button) findViewById(R.id.BtnBarrer);
-        BtnLimpiar = (Button) findViewById(R.id.BtnLimpiar);
-        BtnGuardar = (Button) findViewById(R.id.BtnGuardar);
-        BtnRecorrer = (Button) findViewById(R.id.BtnRecorrer);
+
+
 
         bluetoothIn = new Handler() {
             public void handleMessage(android.os.Message msg) {
@@ -77,65 +75,37 @@ public class ControlDeCarro extends AppCompatActivity {
         BtnArriba.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                InfoEnvia("arriba");
+                InfoEnvia("n");
             }
         });
 
         BtnDerecha.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                InfoEnvia("derecha");
+                InfoEnvia("o");
             }
         });
         BtnIzquierda.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                InfoEnvia("izquierda");
+                InfoEnvia("e");
             }
         });
         BtnAbajo.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                InfoEnvia("abajo");
+                InfoEnvia("s");
             }
         });
 
         BtnBarrer.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                InfoEnvia("barrer");
+                InfoEnvia("t");
             }
         });
-        BtnLimpiar.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v)
-            {
-                //String address = info.substring(info.length() - 17);
 
-                Intent i = new Intent(ControlDeCarro.this, Guardar.class);
-                i.putExtra(EXTRA_DEVICE_ADDRESS, address);
-                startActivity(i);
-            }
-        });
-        BtnGuardar.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v)
-            {
-                //String address = info.substring(info.length() - 17);
 
-                Intent i = new Intent(ControlDeCarro.this, Recorrer.class);
-                i.putExtra(EXTRA_DEVICE_ADDRESS, address);
-                startActivity(i);
-            }
-        });
-        BtnRecorrer.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v)
-            {
-                //String address = info.substring(info.length() - 17);
-
-                Intent i = new Intent(ControlDeCarro.this, Guardar.class);
-                i.putExtra(EXTRA_DEVICE_ADDRESS, address);
-                startActivity(i);
-            }
-        });
         /*IdDesconectar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (btSocket!=null)
@@ -203,7 +173,7 @@ public class ControlDeCarro extends AppCompatActivity {
         super.onPause();
         try
         { // Cuando se sale de la aplicación esta parte permite
-            // que no se deje abierto el socket
+             //que no se deje abierto el socket
             btSocket.close();
         } catch (IOException e2) {}
     }
