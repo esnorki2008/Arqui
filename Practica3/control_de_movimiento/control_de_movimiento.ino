@@ -16,12 +16,19 @@ int duracion;
 int distancia;
 
 //Color
-const int S0 = 10;
-const int S1 = 11;
-const int S2 = 12;
-const int S3 = 13;
-const int Out = 14;
+const int S0 = 41;
+const int S1 = 39;
+const int S2 = 45;
+const int S3 = 47;
+const int Out = 49;
 int cRed, cGreen, cBlue;
+
+//Barrido
+const int barredora = 53;
+
+//Boton
+const int boton = 8;
+boolean presionado;
 
 void setup(){
   //Inicializaciones
@@ -55,6 +62,14 @@ void setup(){
   pinMode(Out, INPUT);
   digitalWrite(S0, LOW);
   digitalWrite(S1, HIGH);
+
+  //Barredora
+  pinMode(barredora, OUTPUT);
+  digitalWrite(barredora, HIGH);
+
+  //Boton
+  pinMode(boton, INPUT);
+  presionado = false;
 
   Serial.begin(9600);
 }
@@ -157,18 +172,18 @@ void arriba(int arriba){
 
 void comprobarDistancias(){
   if(verificarAdelante()){
-    arriba(100);
+    arriba(1000);
     Serial.println("Moviendo el carro hacia adelante");
   } else {
     if(verificarIzquierda()){
-      izquierda(200);
+      izquierda(2000);
       Serial.println("Moviendo el carro hacia izquierda");
     } else {
       if(verificarDerecha()){
-        derecha(200);
+        derecha(2000);
         Serial.println("Moviendo el carro hacia derecha");
       } else {
-        abajo(100);
+        abajo(1000);
         Serial.println("Moviendo el carro hacia atras");
       }
     }
@@ -194,37 +209,60 @@ int comprobarColor(){
   cBlue = map(pulseIn(Out, LOW), 2250, 650, 0, 255);
   delay(100);
 
-  /*if(COMBINACIONES NEGRO){
+  /*Serial.print("Rojo ");
+  Serial.print(cRed);
+  Serial.print("    Verde ");
+  Serial.print(cGreen);
+  Serial.print("    Azul ");
+  Serial.print(cBlue);
+  Serial.println("");*/
+  
+
+  if(cRed < 100 && cGreen < 100){
+    Serial.println("GRADA");
     return 0;
-  } else if(COMBINACIONES AZUL){
+  } else if(cBlue > 300){
+    Serial.println("MANUAL");
     return 1;
-  } else if(COMBINACIONES ROJO){
+  } else if(cRed > cBlue && cRed > cGreen){
+    Serial.println("BARRER");
     return 2;
   } else {
+    Serial.println("AUTOMATICO");
     return 3;
-  }*/
+  }
 }
   
 void loop(){
-  switch(comprobarColor()){
-    //Color negro, Retroceso
-    case 0:
-      abajo(100);
-    break;
-    //Color azul, Manual
-    case 1:
-      //Codigo de control manual
-    break;
-    //Color rojo, barrer
-    case 2:
-      //Codigo de barrido
-      comprobarDistancias();
-      break;
-    //Sin color
-    case 3:
-      comprobarDistancias();
-    break;
+  if(digitalRead(boton) == 1){
+    presionado = !presionado;
   }
-  //comprobarDistancias();
+  if(!presionado){
+    switch(comprobarColor()){
+      //Color negro, Retroceso
+      case 0:
+        abajo(100);
+        digitalWrite(barredora, HIGH);
+      break;
+      //Color azul, Manual
+      case 1:
+        //Codigo de control manual
+        digitalWrite(barredora, HIGH);
+      break;
+      //Color rojo, barrer
+      case 2:
+        //Codigo de barrido
+        digitalWrite(barredora, LOW);
+        comprobarDistancias();
+      break;
+      //Sin color
+      case 3:
+        digitalWrite(barredora, HIGH);
+        comprobarDistancias();
+      break;
+    }
+  } else {
+    //Modo Manual
+  }
   delay(50);
 }
