@@ -289,6 +289,7 @@ public class Recorrer extends AppCompatActivity {
             btSocket.connect();
         } catch (IOException e) {
             try {
+                Toast.makeText(getBaseContext(), "No Se Pudo Conectar", Toast.LENGTH_LONG).show();
                 btSocket.close();
             } catch (IOException e2) {}
         }

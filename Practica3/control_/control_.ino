@@ -18,8 +18,7 @@ CR EEprom;
 String Entrada = "";
 int RutaActual[20];
 int ContaEEprom=0;//Contador De Rutas Aagregadas
-int MarcaDirecciones=0;//Contador De Direcciones
-int MarcaTiempo=0;//Contador De Direcciones
+int MarcaPasos=0;//Contador De Direcciones
 int DirecEEprom = 0;
 
 
@@ -115,21 +114,23 @@ void setup()
 }
 
 void ComprobarEEprom(){//Para Ver Si Los Datos Se Ingresaron Bien
+    
   for(int i=0;i<3;i++){ 
+    Serial.println();
       Rut NuevaRuta=EEprom.Rutas[i];     
       for(int x=0;x<5;x++){       
         Serial.print(NuevaRuta.Nombre[x]);
       }    
       for(int x=0;x<10;x++){
-        Directiva Paso=NuevaRuta.Pasos[x];        
+       Directiva Paso=NuevaRuta.Pasos[x];        
        Serial.print(",");
        Serial.print(Paso.Direccion);
        Serial.print(",");
        Serial.print(Paso.Tiempo);
       }
-      Serial.println("}");
+    
    }
-    Serial.println("$");
+  
 }
 void OperacionesBluetooth(){
   bool Continuar=true;
@@ -142,29 +143,32 @@ void OperacionesBluetooth(){
             //Serial.println("loop");          
             if(Serial2.available()){
               char C=Serial2.read();
-              if(C==','){//Delimitador Entre Bytes
+              if(C==','){//Delimitador Entre Bytes                
                 if(Contador==0){//ElNombre
                   EEprom.Rutas[ContaEEprom].Nombre[0]=Entrada[0];
                   EEprom.Rutas[ContaEEprom].Nombre[1]=Entrada[1];
                   EEprom.Rutas[ContaEEprom].Nombre[2]=Entrada[2];
                   EEprom.Rutas[ContaEEprom].Nombre[3]=Entrada[3];
                   EEprom.Rutas[ContaEEprom].Nombre[4]=Entrada[4];
+                  Serial.print(Entrada);
+                  
                 }else{//Contenido Ruta
-                  MarcaDirecciones++;
-                  MarcaTiempo++;
-                  if(Contador%2==0){//Es Una Direccion
-                    EEprom.Rutas[ContaEEprom].Pasos[MarcaDirecciones].Direccion=Entrada.toInt();                    
-                  }else{//Es Un Tiempo
-                    EEprom.Rutas[ContaEEprom].Pasos[MarcaTiempo].Tiempo=Entrada.toInt();
-                    
-                  }                 
-                  Entrada="";
+                  Serial.print(",");
+                  //Serial.print(Entrada);
+                  
+                  if(Contador%2!=0){//Es Una Direccion   
+                    EEprom.Rutas[ContaEEprom].Pasos[MarcaPasos].Direccion=Entrada.toInt();
+                    //Serial.print(MarcaPasos);                                       
+                  }else{//Es Un Tiempo     
+                    EEprom.Rutas[ContaEEprom].Pasos[MarcaPasos].Tiempo=Entrada.toInt();
+                    //Serial.print(MarcaPasos); 
+                    MarcaPasos++;
+                  }                                       
+                  if(MarcaPasos>9)
+                      MarcaPasos=0;
                  
-                  if(MarcaDirecciones>10)
-                      MarcaDirecciones=0;
-                  if(MarcaTiempo>10)
-                      MarcaTiempo=0;
-                }                                                     
+                }
+                Entrada="";                                                     
                 Contador++;
               }else{//Acumulador
                   Entrada=Entrada+C;                   
@@ -173,8 +177,10 @@ void OperacionesBluetooth(){
             if(Contador>20){//21 Bytes De La Ruta
                 ContaEEprom++;
                 if(ContaEEprom>2){
+                  MarcaPasos=0;
                   ContaEEprom=0;
-                  ComprobarEEprom();
+                  EscribirEEprom();//Escribir Los Datos Enviados
+                  //ComprobarEEprom();
                 }
                 Continuar=false;
             }
