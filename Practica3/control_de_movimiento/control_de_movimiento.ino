@@ -136,9 +136,9 @@ boolean verificarAdelante(){
 
   duracion = pulseIn(echoAdelante, HIGH);
   distancia = duracion / 58.2;
-  /*Serial.print("Distancia adelante ");
+  Serial.print("Distancia adelante ");
   Serial.print(distancia);
-  Serial.println(" ");*/
+  Serial.println(" ");
   if(distancia <= minimo){
     return false;
   }
@@ -231,11 +231,11 @@ void comprobarDistancias(){
     Serial.println("Moviendo el carro hacia adelante");
   } else {
     if(verificarIzquierda()){
-      izquierda(2000);
+      izquierda(500);
       Serial.println("Moviendo el carro hacia izquierda");
     } else {
       if(verificarDerecha()){
-        derecha(2000);
+        derecha(500);
         Serial.println("Moviendo el carro hacia derecha");
       } else {
         abajo(1000);
@@ -264,19 +264,19 @@ int comprobarColor(){
   cBlue = map(pulseIn(Out, LOW), 2250, 650, 0, 255);
   delay(100);
 
-  /*Serial.print("Rojo ");
+  Serial.print("Rojo ");
   Serial.print(cRed);
   Serial.print("    Verde ");
   Serial.print(cGreen);
   Serial.print("    Azul ");
   Serial.print(cBlue);
-  Serial.println("");*/
+  Serial.println("");
   
 
-  if(cRed < 100 && cGreen < 100){
+  if(cRed < 150 && cGreen < 150){
     Serial.println("GRADA");
     return 0;
-  } else if(cBlue > 300){
+  } else if(cBlue > cRed && cBlue > cGreen){
     Serial.println("MANUAL");
     return 1;
   } else if(cRed > cBlue && cRed > cGreen){
@@ -522,7 +522,7 @@ void loop(){
     switch(comprobarColor()){
       //Color negro, Retroceso
       case 0:
-        abajo(100);
+        abajo(500);
         digitalWrite(barredora, HIGH);
       break;
       //Color azul, Manual
