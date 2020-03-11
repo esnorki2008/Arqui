@@ -1,4 +1,4 @@
-#include "LedControl.h"
+#include <LedControl.h>
 
 //Motores
 const int motor1 = 47;
@@ -11,9 +11,9 @@ const int motor3 = 44;
 const int motor3a = 45;
 
 //Matriz
-const int DIN = 51;
-const int CLK = 52;
-const int CS = 53;
+const int DIN = 2;
+const int CLK = 3;
+const int CS = 4;
 LedControl lc = LedControl(DIN, CLK, CS, 1);
 
 //Control de posicion
@@ -21,12 +21,12 @@ int posicionX = 0;
 int posicionY = 0;
 
 //Botones movimiento
-const int BTNU = 2;
-const int BTND = 3;
-const int BTNL = 4;
-const int BTNR = 5;
-const int BTNB = 6;
-const int BTNS = 7;
+const int BTNU = 5;
+const int BTND = 6;
+const int BTNL = 7;
+const int BTNR = 8;
+const int BTNB = 9;
+const int BTNS = 10;
 
 
 int PENDIENTE = 0;

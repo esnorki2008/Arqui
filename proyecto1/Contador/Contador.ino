@@ -1,3 +1,4 @@
+#include <LiquidCrystal.h>
 //ContadorDeMonedas
 int sensorReading=0;//Pin análogo en espera
 int MonedaQuetzal=0;
@@ -12,7 +13,7 @@ int D5=28;
 int D6=30;
 int D7=32;
 //
-#include <LiquidCrystal.h>
+
 
 // initialize the library with the numbers of the interface pins
 LiquidCrystal lcd(RS, Enable, D4, D5, D6, D7
