@@ -1,4 +1,4 @@
-int Creditos=1000;
+int Credito=0;
 int UltimaMoneda=0;
 int CantidadMonedas100=0;
 int CantidadMonedas50=0;
@@ -60,9 +60,9 @@ void OperacionesBluetooth(){
           ModoDeJuego=2;
         }
         else if(m=='i'){//Enviar Info Monedas
-            if(Creditos<0)
-              Creditos=0;
-            Serial2.print(Creditos);
+            if(Credito<0)
+              Credito=0;
+            Serial2.print(Credito);
             Serial2.print(',');
             Serial2.print(CantidadMonedas100);
             Serial2.print(',');
@@ -74,7 +74,7 @@ void OperacionesBluetooth(){
             Serial2.print('$');
             delay(1000);            
         }else if(m=='c'){//Comprar Boleto
-            Creditos=Creditos-100;
+            Credito=Credito-100;
         }else{
         //delay(1000);//Delay Para Que No Duplique Informacion
         if(!ModoRemoto){
