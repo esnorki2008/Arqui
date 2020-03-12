@@ -76,36 +76,44 @@ public class Jugar extends AppCompatActivity {
         BtnArriba.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
+                MainActivity.ModoDeJuego=0;
                 InfoEnvia("u");
             }
         });
         BtnDerecha.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
+                MainActivity.ModoDeJuego=0;
                 InfoEnvia("r");
             }
         });
-        BtnIzquierda.setOnClickListener(new View.OnClickListener() {
+        BtnIzquierda.setOnClickListener(
+
+        new View.OnClickListener() {
             public void onClick(View v)
             {
+                MainActivity.ModoDeJuego=0;
                 InfoEnvia("l");
             }
         });
         BtnAbajo.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
+                MainActivity.ModoDeJuego=0;
                 InfoEnvia("d");
             }
         });
         BtnAgarrar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
+                MainActivity.ModoDeJuego=0;
                 InfoEnvia("g");
             }
         });
         BtnSoltar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
+                MainActivity.ModoDeJuego=0;
                 InfoEnvia("s");
             }
         });
@@ -121,6 +129,7 @@ public class Jugar extends AppCompatActivity {
                 finish();
             }
         });*/
+        InfoEnvia("y");
     }
     void InfoEnvia(String id){
         if (address == null) {

@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     >
 
+    <TextView
+        android:id="@+id/LblModo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/LblSubSub"
+        android:text="Sin Modo"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/LblSubSub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/LblTicket"
+        android:text="Modo Seleccionado"
+        android:textSize="24sp" />
+
     <Button
         android:id="@+id/BtnJugar"
         android:layout_width="wrap_content"
@@ -61,11 +77,20 @@
         android:text="Modo De Juego" />
 
     <TextView
-        android:id="@+id/LblElegido"
+        android:id="@+id/LblSubTituloSaldo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/BtnFichas"
         android:layout_marginTop="17dp"
-        android:text="TextView"
+        android:text="Cantidad De Tickets Disponibles"
         android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/LblTicket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/LblSubTituloSaldo"
+        android:text="0"
+        android:textSize="36sp"
+        android:textStyle="bold" />
 </RelativeLayout>

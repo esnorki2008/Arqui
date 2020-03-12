@@ -9,15 +9,32 @@
     tools:context=".Monedas">
 
     <TextView
+        android:id="@+id/LblTicket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/LblTituTickets"
+        android:text="0"
+        android:textSize="36sp"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/LblTituTickets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/LblSaldo"
+        android:text="Tickets Disponibles"
+        android:textSize="30sp" />
+
+    <TextView
         android:id="@+id/LblSaldo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/LblSubTitulo"
+        android:layout_below="@id/LblSubTituloSaldo"
         android:text="0"
         android:textSize="36sp" />
 
     <TextView
-        android:id="@+id/LblSubTitulo"
+        android:id="@+id/LblSubTituloSaldo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/BtnActualizar"

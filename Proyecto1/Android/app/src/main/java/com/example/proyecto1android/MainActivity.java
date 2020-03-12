@@ -15,12 +15,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
-
+    public static int Ticket=0;
+    public static int ModoDeJuego=0;
     private static final String TAG = "DispositivosBT";
     ListView idlista;
+    TextView LblTicket,LblModo;
     Button BtnJugar,BtnModo,BtnFichas;
     public static String EXTRA_DEVICE_ADDRESS = "device_address";
     public static String Direcc = null;
@@ -34,8 +38,9 @@ public class MainActivity extends AppCompatActivity {
         BtnJugar=(Button) findViewById(R.id.BtnJugar);
         BtnModo=(Button) findViewById(R.id.BtnModo);
         BtnFichas=(Button) findViewById(R.id.BtnFichas);
-
-       BtnFichas.setOnClickListener(new View.OnClickListener() {
+        LblTicket=(TextView)findViewById(R.id.LblTicket);
+        LblModo=(TextView)findViewById(R.id.LblModo);
+        BtnFichas.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
                 Intent i = new Intent(MainActivity.this, Monedas.class);
@@ -43,13 +48,32 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
           });
+        BtnModo.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                if(Ticket<1 && ModoDeJuego==0)
+                    Toast.makeText(getBaseContext(), "No Ha Comprado Tickets", Toast.LENGTH_SHORT).show();
+                else{
 
+                    Intent i = new Intent(MainActivity.this, ModoJuego.class);
+                    i.putExtra(EXTRA_DEVICE_ADDRESS, Direcc);
+                    startActivity(i);
+                }
+            }
+        });
         BtnJugar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
+                if(ModoDeJuego==0)
+                    Toast.makeText(getBaseContext(), "No Ha Seleccionado Un Modo De Juego", Toast.LENGTH_SHORT).show();
+                else if(ModoDeJuego==1)
+                    Toast.makeText(getBaseContext(), "Esta Función Es Para Modo Remoto", Toast.LENGTH_SHORT).show();
+                else{
+
                 Intent i = new Intent(MainActivity.this, Jugar.class);
                 i.putExtra(EXTRA_DEVICE_ADDRESS, Direcc);
                 startActivity(i);
+                }
             }
         });
         /*
@@ -63,9 +87,24 @@ public class MainActivity extends AppCompatActivity {
         });*/
 
     }
+    private void ActualizarInfo(){
+        LblTicket.setText(Ticket+"");
+        switch (ModoDeJuego){
+            case 0:
+                LblModo.setText("Sin Modo");
+                break;
+            case 1:
+                LblModo.setText("Manual");
+                break;
+            case 2:
+                LblModo.setText("Remoto");
+                break;
+        }
 
+    }
     @Override
     public void onResume(){
+        ActualizarInfo();
         super.onResume();
         //---------------------------------
         VerificarEstadoBT();
