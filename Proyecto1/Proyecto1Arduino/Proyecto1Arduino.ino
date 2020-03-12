@@ -272,16 +272,20 @@ bool ModoRemoto(char m){
       return true;
   
         if(m=='u'){//MoverArriba
+          moverY(true);
          return true;
         }else
         if(m=='d'){//MoverAbajo
+          moverY(false);
          return true;
         }else
         if(m=='l'){//MoverIzquierda
+         moverX(false);
          return true;
         }else
         if(m=='r'){//MoverDerecha
             //MoverDerecha();
+          moverX(true);
           return true;
         }else
         if(m=='g'){//Agarrar
