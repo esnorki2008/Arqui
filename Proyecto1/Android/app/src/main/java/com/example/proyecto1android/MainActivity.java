@@ -66,8 +66,6 @@ public class MainActivity extends AppCompatActivity {
             {
                 if(ModoDeJuego==0)
                     Toast.makeText(getBaseContext(), "No Ha Seleccionado Un Modo De Juego", Toast.LENGTH_SHORT).show();
-                else if(ModoDeJuego==1)
-                    Toast.makeText(getBaseContext(), "Esta Función Es Para Modo Remoto", Toast.LENGTH_SHORT).show();
                 else{
 
                 Intent i = new Intent(MainActivity.this, Jugar.class);

@@ -24,7 +24,7 @@ public class Jugar extends AppCompatActivity {
 
     //1)
     Button BtnArriba, BtnAbajo,BtnIzquierda,BtnDerecha,BtnSoltar,BtnAgarrar;
-    TextView Nose;
+    TextView LblEstado;
     //-------------------------------------------
     public static String EXTRA_DEVICE_ADDRESS = "device_address";
     Handler bluetoothIn;
@@ -45,23 +45,21 @@ public class Jugar extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jugar);
         //2)
-
+        Tobogan=0;
         BtnArriba = (Button) findViewById(R.id.BtnArriba);
         BtnIzquierda = (Button) findViewById(R.id.BtnIzquierda);
         BtnDerecha = (Button) findViewById(R.id.BtnDerecha);
         BtnAbajo = (Button) findViewById(R.id.BtnAbajo);
         BtnAgarrar = (Button) findViewById(R.id.BtnAgarrar);
         BtnSoltar = (Button) findViewById(R.id.BtnSoltar);
-
+        LblEstado=(TextView)findViewById(R.id.LblEstadoGarra);
 
         bluetoothIn = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 if (msg.what == handlerState) {
                     String readMessage = (String) msg.obj;
                     DataStringIN.append(readMessage);
-
                     int endOfLineIndex = DataStringIN.indexOf("#");
-
                     if (endOfLineIndex > 0) {
                         String dataInPrint = DataStringIN.substring(0, endOfLineIndex);
                         //IdBufferIn.setText("Dato: " + dataInPrint);//<-<- PARTE A MODIFICAR >->->
@@ -77,6 +75,7 @@ public class Jugar extends AppCompatActivity {
             public void onClick(View v)
             {
                 MainActivity.ModoDeJuego=0;
+                ActualizarInfo();
                 InfoEnvia("u");
             }
         });
@@ -85,6 +84,7 @@ public class Jugar extends AppCompatActivity {
             {
                 MainActivity.ModoDeJuego=0;
                 InfoEnvia("r");
+                ActualizarInfo();
             }
         });
         BtnIzquierda.setOnClickListener(
@@ -94,6 +94,7 @@ public class Jugar extends AppCompatActivity {
             {
                 MainActivity.ModoDeJuego=0;
                 InfoEnvia("l");
+                ActualizarInfo();
             }
         });
         BtnAbajo.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +102,7 @@ public class Jugar extends AppCompatActivity {
             {
                 MainActivity.ModoDeJuego=0;
                 InfoEnvia("d");
+                ActualizarInfo();
             }
         });
         BtnAgarrar.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +110,7 @@ public class Jugar extends AppCompatActivity {
             {
                 MainActivity.ModoDeJuego=0;
                 InfoEnvia("g");
+                ActualizarInfo();
             }
         });
         BtnSoltar.setOnClickListener(new View.OnClickListener() {
@@ -115,6 +118,17 @@ public class Jugar extends AppCompatActivity {
             {
                 MainActivity.ModoDeJuego=0;
                 InfoEnvia("s");
+
+
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if(MainActivity.ModoDeJuego==2)
+                       InfoEnvia("y");
+
+                ActualizarInfo();
             }
         });
 
@@ -129,7 +143,22 @@ public class Jugar extends AppCompatActivity {
                 finish();
             }
         });*/
-        InfoEnvia("y");
+       // if(MainActivity.ModoDeJuego==2)
+         //   InfoEnvia("y");
+    }
+    private  void ActualizarInfo(){
+        switch (Tobogan){
+            case 0:
+                LblEstado.setText("En Curso");
+                break;
+            case 1:
+                LblEstado.setText("Peluche Obtenido");
+                break;
+            case 2:
+                LblEstado.setText("Game OVer");
+                break;
+        }
+
     }
     void InfoEnvia(String id){
         if (address == null) {
@@ -205,7 +234,18 @@ public class Jugar extends AppCompatActivity {
             }
         }
     }
-
+    int Tobogan=0;
+    private void EstadoGarra(String Informacion){
+        Informacion=Informacion.replace("$","");
+        Informacion.trim();
+        if(Informacion.toLowerCase().equals("w")){
+            Tobogan=2;
+        }else if(Informacion.toLowerCase().equals("l")){
+            Tobogan=1;
+        }else{
+            Tobogan=0;
+        }
+    }
     //Crea la clase que permite crear el evento de conexion
     private class ConnectedThread extends Thread
     {
@@ -232,7 +272,7 @@ public class Jugar extends AppCompatActivity {
             int z;
             // Se mantiene en modo escucha para determinar el ingreso de datos
 
-                /*while (true) {
+                while (true) {
                     try {
                         bytes = mmInStream.read(buffer);            //read bytes from input buffer
                         String readMessage = new String(buffer, 0, bytes);
@@ -240,7 +280,7 @@ public class Jugar extends AppCompatActivity {
 
                         Lectura=Lectura+readMessage;
                         if(readMessage.contains("$")){
-
+                            EstadoGarra(Lectura);
                             Log.i("STR", Lectura);
                             Lectura="";
 
@@ -249,7 +289,7 @@ public class Jugar extends AppCompatActivity {
                     } catch (IOException e) {
                         break;
                     }
-                }*/
+                }
 
 
 

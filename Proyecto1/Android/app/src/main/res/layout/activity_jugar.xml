@@ -7,6 +7,14 @@
 
     >
 
+    <TextView
+        android:id="@+id/LblEstadoGarra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/BtnSoltar"
+        android:text="En Curso"
+        android:textSize="36sp" />
+
     <Button
         android:id="@+id/BtnAgarrar"
         android:layout_width="wrap_content"
