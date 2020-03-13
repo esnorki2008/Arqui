@@ -3,9 +3,9 @@
 
 int sensorReading=0;//Pin análogo en espera
 //Pines Analogos De Lectura
-int MonedaQuetzal=0;
-int MonedaVeinti=1;
-int MonedaCincuenta=2;
+int MonedaQuetzal=10;
+int MonedaVeinti=9;
+int MonedaCincuenta=11;
 int DelayMonedas=300;
 //Variables Del Contador
 int Credito=0;//Credito Actual
@@ -42,16 +42,16 @@ void setup()
 }
 //Para El Contador
 void AccionesDelContador(){
-  sensorReading=analogRead(0); //Instrucción para obtener dato analógico
- if(sensorReading<400){
+  sensorReading=analogRead(MonedaQuetzal); //Instrucción para obtener dato analógico
+ if(sensorReading<280){
     Serial.print("Uno   "); 
     Serial.println(sensorReading); 
     Credito=Credito+100;
     delay(DelayMonedas);
   }
 
-  sensorReading=analogRead(1); //Instrucción para obtener dato analógico
- if(sensorReading<385){
+  sensorReading=analogRead(MonedaCincuenta); //Instrucción para obtener dato analógico
+ if(sensorReading<280){
     Serial.print("Cincuenta   "); 
     Serial.println(sensorReading);
     Credito=Credito+50;
@@ -62,8 +62,9 @@ void AccionesDelContador(){
 
   
    
-  sensorReading=analogRead(2); //Instrucción para obtener dato analógico
- if(sensorReading<385){
+  sensorReading=analogRead(MonedaVeinti); //Instrucción para obtener dato analógico
+ //Serial.println(sensorReading);
+   if(sensorReading<405){
     Serial.print("Veinticinco   "); 
     Serial.println(sensorReading);
     Credito=Credito+25;
@@ -162,7 +163,7 @@ void loop()
   {  
       OperacionesBluetooth();
        
-   }
+  }
  
   
 }
