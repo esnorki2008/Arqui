@@ -1,4 +1,10 @@
 #include <LedControl.h>
+#include <Stepper.h>
+
+//Stepper
+int Frecuencia = 0;
+const int stepsPerRevolution = 300;
+Stepper myStepper = Stepper(stepsPerRevolution, 52, 48, 50, 46);
 
 //Motores
 const int motor1 = 47;
@@ -26,7 +32,6 @@ const int BTND = 6;
 const int BTNL = 7;
 const int BTNR = 8;
 const int BTNB = 9;
-const int BTNS = 10;
 
 
 int PENDIENTE = 0;
@@ -51,7 +56,18 @@ void setup() {
   pinMode(BTNL, INPUT);
   pinMode(BTNR, INPUT);
   pinMode(BTNB, INPUT);
-  pinMode(BTNS, INPUT);
+  myStepper.setSpeed(100);
+
+  Serial.begin(9600);
+}
+
+void parpadear(int cantidad){
+  for(int i = 0; i < cantidad; i++){
+    lc.setLed(0, posicionY, posicionX, HIGH);
+    delay(100);
+    lc.setLed(0, posicionY, posicionX, LOW);
+    delay(100);
+  }
 }
 
 //True -> subir
@@ -60,13 +76,13 @@ void moverZ(bool tipo){
   if(tipo){
     digitalWrite(motor3,HIGH);
     digitalWrite(motor3a,LOW);
-    delay(PENDIENTE);
+    parpadear(20);
     digitalWrite(motor3,LOW);
     digitalWrite(motor3a,LOW);
   }else{
     digitalWrite(motor3,LOW);
     digitalWrite(motor3a,HIGH);
-    delay(PENDIENTE);
+    parpadear(15);
     digitalWrite(motor3,LOW);
     digitalWrite(motor3a,LOW);
   }
@@ -105,8 +121,8 @@ void moverY(bool tipo){
       digitalWrite(motor2,HIGH);
       digitalWrite(motor2a,LOW);
       delay(375);
-      digitalWrite(motor1,LOW);
-      digitalWrite(motor1a,LOW);
+      digitalWrite(motor2,LOW);
+      digitalWrite(motor2a,LOW);
       posicionY++;
     }
   }else{
@@ -114,12 +130,12 @@ void moverY(bool tipo){
       digitalWrite(motor2,LOW);
       digitalWrite(motor2a,HIGH);
       delay(375);
-      digitalWrite(motor1,LOW);
-      digitalWrite(motor1a,LOW);
+      digitalWrite(motor2,LOW);
+      digitalWrite(motor2a,LOW);
       posicionY--;
     }
   }
-  lc.setLed(0, posicionY, posicionX, true);
+  lc.setLed(0, posicionX, posicionY, true);
 }
 
 void dibujarFeliz(){
@@ -152,21 +168,45 @@ void dibujarTriste(){
 
 void loop() {
   if(digitalRead(BTNU) == HIGH){
+    Serial.println("Y+");
     moverY(true);
   }
-  if(digitalRead(BTND == HIGH)){
+  if(digitalRead(BTND) == HIGH){
+    Serial.println("Y-");
     moverY(false);
   }
   if(digitalRead(BTNR) == HIGH){
+    Serial.println("X+");
     moverX(true);
   }
-  if(digitalRead(BTNL == HIGH)){
+  if(digitalRead(BTNL) == HIGH){
+    Serial.println("X-");
     moverX(false);
   }
-  if(digitalRead(BTNS) == HIGH){
+  if(digitalRead(BTNB) == HIGH){
+    Serial.println("Z-");
     moverZ(true);
-  }
-  if(digitalRead(BTNB == HIGH)){
+    garra();
+    Serial.println("Z+");
     moverZ(false);
+  }
+}
+
+void garra(){
+  //Abrir
+  for(int i=0;i<20;i++)
+  {
+    //delay(100);
+    myStepper.step(-stepsPerRevolution);
+    Serial.println("Abriendo");
+  }
+  delay(3000);
+  
+  //Cerrar 
+  for(int i=0;i<20;i++)
+  {
+    //delay(100);
+    myStepper.step(stepsPerRevolution);
+    Serial.println("Cerrando");
   }
 }

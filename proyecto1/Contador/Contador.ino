@@ -63,8 +63,8 @@ void AccionesDelContador(){
   
    
   sensorReading=analogRead(MonedaVeinti); //Instrucción para obtener dato analógico
- //Serial.println(sensorReading);
-   if(sensorReading<405){
+ Serial.println(sensorReading);
+   if(sensorReading<495){
     Serial.print("Veinticinco   "); 
     Serial.println(sensorReading);
     Credito=Credito+25;
