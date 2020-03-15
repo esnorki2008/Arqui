@@ -113,6 +113,7 @@ void setup()
   JuegoNuevo();
 }
 void JuegoNuevo(){
+  VecesGarra=0;
   posicionX = 0;
   posicionY = 0;  
   lc.clearDisplay(0);
