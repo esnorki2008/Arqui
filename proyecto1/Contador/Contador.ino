@@ -73,19 +73,7 @@ void AccionesDelContador(){
 
   lcd.setCursor(0, 1);
   lcd.print(Credito);
- /*
-  Serial.print("1:");
-  Serial.print(analogRead(MonedaQuetzal));
-  Serial.print("    ");
-  Serial.print("50:");
-  
-  Serial.print(analogRead(MonedaVeinti));
-  Serial.print("    ");
-  
-  Serial.print("25:");
-  Serial.print(analogRead(MonedaCincuenta));
-  Serial.println("");
-  */
+
 }
 //Operaciones Bluetooth
 bool ModoRemoto(char m){
